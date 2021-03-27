@@ -1,13 +1,17 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
+import { Layout } from 'antd'
+import { Login } from '~/pages/login'
 
 interface AuthProps {}
 
 const _Auth: FC<AuthProps> = () => {
   return (
-    <Auth>
-      
-    </Auth>
+    <Layout className="authentication">
+      <Layout.Content>
+        <Login />
+      </Layout.Content>
+    </Layout>
   )
 }
 
