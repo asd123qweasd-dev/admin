@@ -1,12 +1,13 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import styled from '@emotion/styled'
+import { LoginForm } from '~/form/login'
 
-interface LoginProps {}
+interface LoginProps { }
 
 const _Login: FC<LoginProps> = () => {
   return (
     <Login>
-      sd
+      <LoginForm />
     </Login>
   )
 }

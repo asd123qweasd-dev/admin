@@ -5,6 +5,7 @@ import { globalStyles } from '~/styles/global'
 import { ThemeProvider } from '@emotion/react'
 import { Provider } from 'react-redux'
 import { Layouts } from '~/layouts'
+import 'antd/dist/antd.css'
 
 function App() {
   return (
