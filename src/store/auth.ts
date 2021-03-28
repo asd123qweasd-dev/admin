@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { CoreState } from '~/store'
+import { RootState } from '~/store'
 
 type AuthFormData = {
   email: string
@@ -27,8 +27,14 @@ const authSlice = createSlice({
   },
 })
 
-export const selectClock = (state: CoreState) => state.clock
+export const selectClock = (state: RootState) => state.clock
 
 export const { tick } = authSlice.actions
+
+// export const incrementAsync = (amount: number): AppThunk => dispatch => {
+//   setTimeout(() => {
+//     dispatch(incrementByAmount(amount));
+//   }, 1000);
+// };
 
 export default authSlice.reducer

@@ -1,5 +1,5 @@
 import React from 'react';
-import store from '~/store'
+import { store } from '~/store'
 import { theme } from '~/styles'
 import { globalStyles } from '~/styles/global'
 import { ThemeProvider } from '@emotion/react'

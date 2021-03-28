@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'https://api.example.com'
+  baseURL: 'http://31.133.50.50:8080/api'
 })
 
 instance.interceptors.request.use(function (config) {
@@ -22,3 +22,5 @@ instance.interceptors.response.use(function (response) {
   // Do something with response error
   return Promise.reject(error);
 });
+
+export default instance

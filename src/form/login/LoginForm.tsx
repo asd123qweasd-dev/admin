@@ -1,6 +1,7 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Input, Form, Button, notification, Spin } from 'antd'
 import { css } from '@emotion/css'
+import { api } from '~/api'
 
 interface LoginFormData {
   email: string
@@ -10,6 +11,15 @@ interface LoginFormData {
 export const LoginForm: FC = () => {
   const [FormInstance] = Form.useForm<LoginFormData>()
   const [formLoader, setFormLoader] = useState<boolean>(false)
+
+  useEffect(function() {
+    mounted()
+  }, [])
+  
+  async function mounted () {
+    const {data} = await api.auth.me()
+    console.log(data);
+  }
 
   const onFinish = async (values: LoginFormData) => {
     const { password, email } = values
