@@ -1,3 +1,4 @@
+import React from 'react'
 import { css, Global } from '@emotion/react'
 import { media, scroll } from '~/styles'
 import { svgSprite } from './svg-sprite'

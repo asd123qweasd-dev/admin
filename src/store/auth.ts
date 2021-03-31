@@ -1,40 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '~/store'
+import api from '~/api'
+import { AppThunk } from './index'
 
-type AuthFormData = {
+export type AuthLoginForm = {
   email: string
   password: string
 }
 
-type AuthState = {
-  form: AuthFormData
+export type AuthState = {
+  loginForm: AuthLoginForm
 }
 
 const initialState: AuthState = {
-  form: {
+  loginForm: {
     email: '',
     password: ''
   }
 }
 
 const authSlice = createSlice({
-  name: 'clock',
+  name: 'auth',
   initialState,
   reducers: {
-    tick: (state, action: PayloadAction<AuthState>) => {
-      state.form = {email: 'asd', password: 'asd'}
+    valuesChange: (state, action: PayloadAction<Partial<AuthLoginForm>>) => {
+      state.loginForm = {...state.loginForm, ...action.payload}
     },
   },
 })
 
-export const selectClock = (state: RootState) => state.clock
+export const { valuesChange } = authSlice.actions
 
-export const { tick } = authSlice.actions
-
-// export const incrementAsync = (amount: number): AppThunk => dispatch => {
-//   setTimeout(() => {
-//     dispatch(incrementByAmount(amount));
-//   }, 1000);
-// };
 
 export default authSlice.reducer
