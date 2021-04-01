@@ -6,7 +6,7 @@ interface MainProps {}
 const _Main: FC<MainProps> = () => {
   return (
     <Main>
-      
+      hello
     </Main>
   )
 }

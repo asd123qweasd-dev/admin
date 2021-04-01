@@ -1,13 +1,13 @@
 import { combineReducers, configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loginFormSlice } from './loginForm'
-import authReducer from './auth'
+import { authSlice } from './auth'
 
-const rootReducer = combineReducers ( {
+const rootReducer = combineReducers({
   loginForm: loginFormSlice.reducer,
-  auth: authReducer
+  auth: authSlice.reducer
 })
- 
+
 export const store = configureStore({
   reducer: rootReducer,
   devTools: true

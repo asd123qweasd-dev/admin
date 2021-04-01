@@ -1,46 +1,59 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { api } from '~/api'
 import { AppThunk } from '~/store'
+import { FieldData } from 'rc-field-form/lib/interface'
+import { loginFormData } from './data'
+import { authSlice } from '../auth'
 
-export type LoginForm = {
-  email: string
-  password: string
-}
+export type LoginFormData = FieldData[]
 
 export type LoginFormState = {
   loading: boolean
-  form: LoginForm
+  form: FieldData
 }
 
-const initialState: LoginFormState = {
+const initialState: any = {
   loading: false,
-  form: {
-    email: '',
-    password: ''
-  }
+  form: loginFormData
 }
 
 export const loginFormSlice = createSlice({
   name: 'loginForm',
   initialState,
   reducers: {
-    changeForm: (state, action: PayloadAction<Partial<LoginForm>>) => {
-      console.log(action.payload);
-      
-      state.form = {...state.form, ...action.payload}
+    changeForm: (state, action: PayloadAction<LoginFormData>) => {
+      state.form = [...action.payload]
+    },
+    changeLoader: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload
     }
   }
 })
 
-export const submit = ():AppThunk => async (dispatch, getState) => {
-  console.log('ad');
-  
-  const authParam = getState().auth.loginForm
+export const submit = (): AppThunk => async (dispatch, getState) => {
+  dispatch(loginFormSlice.actions.changeLoader(true))
+  const loginForm = getState().loginForm
   try {
-    const {data} = await api.auth.login(authParam)
-    console.log(data)
-  }catch(err){}
+    const {data} = await api.auth.login(getAuthData(loginForm.form))
+    dispatch(authSlice.actions.change(data))
+  } catch (err) {
+    if (err.isAxiosError) {
+      let newData = [...loginForm.form]
+
+      for(let key in err.response.data.errors) {
+        let field = newData.find(item => ~String(item.name).indexOf(key))
+        const updField = {...field, errors: [...err.response.data.errors[key]]}
+        newData = newData.filter(item => !~item.name.indexOf(key))
+        newData.push(updField)
+      }
+      dispatch(loginFormSlice.actions.changeForm(newData))
+    }
+  }
+  dispatch(loginFormSlice.actions.changeLoader(false))
 }
 
-// export const { formValuesChange } = loginFormSlice.actions
-// export default loginFormSlice.reducer
+function getAuthData (data: LoginFormData) {
+  const email = data.find(item => ~String(item?.name)?.indexOf('email'))?.value
+  const password = data.find(item => ~String(item?.name)?.indexOf('password'))?.value
+  return { email, password }
+}
