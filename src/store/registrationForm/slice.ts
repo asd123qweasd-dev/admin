@@ -4,7 +4,7 @@ import { AppThunk } from '~/store'
 import { FieldData } from 'rc-field-form/lib/interface'
 import { registrationFormData } from './data'
 import { authSlice } from '../auth'
-import { hasRemember } from '~/helpers/hasRemember'
+import { hasRemember, showErrorFields } from '~/helpers'
 
 export type RegistrationFormData = FieldData[]
 
@@ -41,19 +41,7 @@ export const submit = (): AppThunk => async (dispatch, getState) => {
     data.remember = hasRemember(registrationForm.form)
     dispatch(authSlice.actions.changeSession(data))
   } catch (err) {
-    if (err.isAxiosError) {
-      let newData = [...registrationForm.form]
-
-      for (let key in err.response.data.errors) {
-        let field = newData.find(item => ~String(item.name).indexOf(key))
-        if (field) {
-          const updField = { ...field, errors: [...err.response.data.errors[key]] }
-          newData = newData.filter(item => !~String(item.name).indexOf(key))
-          newData.push(updField)
-        }
-      }
-      dispatch(changeForm(newData))
-    }
+    showErrorFields(err, dispatch, changeForm, registrationForm.form)
   }
   dispatch(changeLoader(false))
 }
@@ -65,3 +53,4 @@ function getRegistrationData(data: RegistrationFormData) {
   const password_confirmation = data.find(item => ~String(item?.name)?.indexOf('password_confirmation'))?.value
   return { name, email, password, password_confirmation }
 }
+

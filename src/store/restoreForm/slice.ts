@@ -4,16 +4,16 @@ import { AppThunk } from '~/store'
 import { FieldData } from 'rc-field-form/lib/interface'
 import { loginFormData } from './data'
 import { authSlice } from '../auth'
-import { hasRemember, showErrorFields } from '~/helpers'
+import {hasRemember} from '~/helpers/hasRemember'
 
 export type LoginFormData = FieldData[]
 
 export type LoginFormState = {
   loading: boolean
-  form: LoginFormData
+  form: FieldData
 }
 
-const initialState: LoginFormState = {
+const initialState: any = {
   loading: false,
   form: loginFormData
 }
@@ -41,7 +41,17 @@ export const submit = (): AppThunk => async (dispatch, getState) => {
     data.remember = hasRemember(loginForm.form)
     dispatch(authSlice.actions.changeSession(data))
   } catch (err) {
-    showErrorFields(err, dispatch, changeForm, loginForm.form)
+    if (err.isAxiosError) {
+      let newData = [...loginForm.form]
+
+      for (let key in err.response.data.errors) {
+        let field = newData.find(item => ~String(item.name).indexOf(key))
+        const updField = { ...field, errors: [...err.response.data.errors[key]] }
+        newData = newData.filter(item => !~item.name.indexOf(key))
+        newData.push(updField)
+      }
+      dispatch(changeForm(newData))
+    }
   }
   dispatch(changeLoader(false))
 }

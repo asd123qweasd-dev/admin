@@ -3,6 +3,7 @@ import { TokenResponse } from '~/api/auth'
 export function updateSession(session: TokenResponse | null) {
   if (!(session && session.access_token && session.expires_at)) {
     localStorage.removeItem('session')
+    sessionStorage.removeItem('session')
   } else {
     session.remember
     ? localStorage.setItem('session', JSON.stringify(session))
