@@ -1,6 +1,6 @@
 import { shallowEqual } from "react-redux"
 import { RootState, useAppDispatch, useAppSelector } from "~/store"
-import { logout } from "./slice"
+import { logout, getMe } from "./slice"
 
 const authState = (state: RootState) => ({ ...state.auth })
 
@@ -15,6 +15,9 @@ export function useAuth() {
     },
     logout() {
       dispatch(logout())
+    },
+    getMe() {
+      dispatch(getMe())
     }
   }
 }

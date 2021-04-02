@@ -1,6 +1,6 @@
 import { shallowEqual } from "react-redux"
 import { RootState, useAppDispatch, useAppSelector } from "~/store"
-import { LoginFormData, loginFormSlice, submit } from "./slice"
+import { LoginFormData, submit, changeForm } from "./slice"
 
 const loginFormState = (state: RootState) => ({ ...state.loginForm })
 
@@ -11,7 +11,7 @@ export function useLoginForm() {
   return {
     ...loginForm,
     changeForm(data: LoginFormData) {
-      dispatch(loginFormSlice.actions.changeForm(data))
+      dispatch(changeForm(data))
     },
     submit() {
       dispatch(submit())

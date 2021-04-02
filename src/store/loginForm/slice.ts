@@ -30,29 +30,31 @@ export const loginFormSlice = createSlice({
   }
 })
 
+export const { changeLoader, changeForm } = loginFormSlice.actions
+
 export const submit = (): AppThunk => async (dispatch, getState) => {
   dispatch(loginFormSlice.actions.changeLoader(true))
   const loginForm = getState().loginForm
   try {
-    const {data} = await api.auth.login(getAuthData(loginForm.form))
-    dispatch(authSlice.actions.change(data))
+    const { data } = await api.auth.login(getAuthData(loginForm.form))
+    dispatch(authSlice.actions.changeSession(data))
   } catch (err) {
     if (err.isAxiosError) {
       let newData = [...loginForm.form]
 
-      for(let key in err.response.data.errors) {
+      for (let key in err.response.data.errors) {
         let field = newData.find(item => ~String(item.name).indexOf(key))
-        const updField = {...field, errors: [...err.response.data.errors[key]]}
+        const updField = { ...field, errors: [...err.response.data.errors[key]] }
         newData = newData.filter(item => !~item.name.indexOf(key))
         newData.push(updField)
       }
-      dispatch(loginFormSlice.actions.changeForm(newData))
+      dispatch(changeForm(newData))
     }
   }
-  dispatch(loginFormSlice.actions.changeLoader(false))
+  dispatch(changeLoader(false))
 }
 
-function getAuthData (data: LoginFormData) {
+function getAuthData(data: LoginFormData) {
   const email = data.find(item => ~String(item?.name)?.indexOf('email'))?.value
   const password = data.find(item => ~String(item?.name)?.indexOf('password'))?.value
   return { email, password }
