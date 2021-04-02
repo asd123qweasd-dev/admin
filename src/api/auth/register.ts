@@ -13,6 +13,7 @@ export type RegisterResponse = TokenResponse
 export function register(data: RegisterRequest): AxiosPromise<RegisterResponse> {
   return axios({
     url: '/auth/register/',
+    headers: { showError: false },
     method: 'post',
     data
   })

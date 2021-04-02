@@ -75,6 +75,8 @@ const form = css`
     border-radius: 4px;
     padding: 24px;
     background: #fff;
+    width: 300px;
+    max-width: 300px;
   }
 `
 

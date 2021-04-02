@@ -4,6 +4,7 @@ import { AppThunk } from '~/store'
 import { FieldData } from 'rc-field-form/lib/interface'
 import { loginFormData } from './data'
 import { authSlice } from '../auth'
+import {hasRemember} from '~/helpers/hasRemember'
 
 export type LoginFormData = FieldData[]
 
@@ -37,6 +38,7 @@ export const submit = (): AppThunk => async (dispatch, getState) => {
   const loginForm = getState().loginForm
   try {
     const { data } = await api.auth.login(getAuthData(loginForm.form))
+    data.remember = hasRemember(loginForm.form)
     dispatch(authSlice.actions.changeSession(data))
   } catch (err) {
     if (err.isAxiosError) {

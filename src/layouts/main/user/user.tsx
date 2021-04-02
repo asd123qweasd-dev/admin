@@ -9,12 +9,12 @@ interface UserProps { }
 
 const _User: FC<UserProps> = () => {
   const { logout, user } = useAuth()
-  
+
   function UserDropDownMenu() {
     return (
       <Menu>
-        <Menu.Item key="1" onClick={logout}>Выйти</Menu.Item>
-        <Menu.Item key="2">asd</Menu.Item>
+        <Menu.Item key="1">Настройки</Menu.Item>
+        <Menu.Item key="2" onClick={logout}>Выйти</Menu.Item>
       </Menu>
     )
   }
@@ -22,13 +22,18 @@ const _User: FC<UserProps> = () => {
   return (
     <User>
       <Avatar src={UserImage} />
-      <Dropdown overlay={UserDropDownMenu}>
+      <UserBar overlay={UserDropDownMenu}>
         <Button> {user?.name} <DownOutlined /> </Button>
-      </Dropdown>
+      </UserBar>
     </User>
   )
 }
 
-const User = styled.div``
+const User = styled.div`
+  margin-right: 15px;
+`
+const UserBar = styled(Dropdown)`
+  border: none;
+`
 
 export { _User as User }

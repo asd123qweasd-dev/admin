@@ -4,12 +4,16 @@ export function updateSession(session: TokenResponse | null) {
   if (!(session && session.access_token && session.expires_at)) {
     localStorage.removeItem('session')
   } else {
-    localStorage.setItem('session', JSON.stringify(session))
+    session.remember
+    ? localStorage.setItem('session', JSON.stringify(session))
+    : sessionStorage.setItem('session', JSON.stringify(session))
   }
 }
 
 export function getSession(): TokenResponse | null {
-  const sessionStr = localStorage.getItem('session')
+  const shotrSessionStr = sessionStorage.getItem('session')
+  const longSessionStr = localStorage.getItem('session')
+  const sessionStr = shotrSessionStr || longSessionStr
   return sessionStr ? JSON.parse(sessionStr) : null
 }
 

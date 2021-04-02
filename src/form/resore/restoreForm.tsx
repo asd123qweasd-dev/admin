@@ -54,17 +54,14 @@ const form = css`
     border-radius: 4px;
     padding: 24px;
     background: #fff;
+    width: 300px;
+    max-width: 300px;
   }
 `
 
 const BtnInline = styled(Button)`
   display: inline;
   padding: 4px 0;
-`
-const MiddleWrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 `
 const Wrap = styled.div`
   .login-form-button {

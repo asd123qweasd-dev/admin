@@ -8,6 +8,7 @@ export type TokenResponse = {
   access_token: string
   expires_at: string
   token_type: string
+  remember?: boolean
 }
 
 export const auth = {

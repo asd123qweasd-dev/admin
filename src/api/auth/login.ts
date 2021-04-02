@@ -12,6 +12,7 @@ export type LoginResponse = TokenResponse
 export function login (data:LoginRequest):AxiosPromise<LoginResponse> {
   return axios({
     url: '/auth/login/',
+    headers: { showError: false },
     method: 'post',
     data
   })

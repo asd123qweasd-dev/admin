@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Input, Form, Button, Spin, Checkbox } from 'antd'
 import { css } from '@emotion/css'
 import { LoginFormData } from '~/store/loginForm/slice'
-import { useLoginForm } from '~/store/loginForm'
+import { useRegistrationForm } from '~/store/registrationForm'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 import { FormVisibleType } from '~/pages/login/login'
@@ -12,19 +12,19 @@ type RegistrationProps = {
 }
 
 export const RegistrationForm: FC<RegistrationProps> = ({changeForm}) => {
-  const loginForm = useLoginForm()
+  const registrationForm = useRegistrationForm()
   const [FormInstance] = Form.useForm<LoginFormData>()
 
   return (
     <Wrap>
-      <Spin spinning={loginForm.loading}>
+      <Spin spinning={registrationForm.loading}>
         <Form
           name="registration"
-          fields={loginForm.form}
+          fields={registrationForm.form}
           form={FormInstance}
-          onFinish={loginForm.submit}
+          onFinish={registrationForm.submit}
           onFieldsChange={(changedFields, allFields) => {
-            loginForm.changeForm(allFields)
+            registrationForm.changeForm(allFields)
           }}
           className={form}
         >
@@ -91,6 +91,8 @@ const form = css`
     border-radius: 4px;
     padding: 24px;
     background: #fff;
+    width: 300px;
+    max-width: 300px;
   }
 `
 
