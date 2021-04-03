@@ -1,13 +1,15 @@
 import { combineReducers, configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loginFormSlice } from './loginForm'
-import { registrationFormSlice} from './registrationForm'
+import { registrationFormSlice } from './registrationForm'
 import { authSlice } from './auth'
+import { restoreFormSlice } from '~/store/restoreForm'
 
 const rootReducer = combineReducers({
   auth: authSlice.reducer,
   loginForm: loginFormSlice.reducer,
   registrationForm: registrationFormSlice.reducer,
+  restoreForm: restoreFormSlice.reducer
 })
 
 export const store = configureStore({

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Input, Form, Button, Spin } from 'antd'
 import { css } from '@emotion/css'
 import { LoginFormData } from '~/store/loginForm/slice'
-import { useLoginForm } from '~/store/loginForm'
+import { useRestoreForm } from '~/store/restoreForm'
 import { UserOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 import { FormVisibleType } from '~/pages/login/login'
@@ -12,19 +12,19 @@ type RestoreFormProps = {
 }
 
 export const RestoreForm: FC<RestoreFormProps> = ({changeForm}) => {
-  const loginForm = useLoginForm()
+  const restoreForm = useRestoreForm()
   const [FormInstance] = Form.useForm<LoginFormData>()
 
   return (
     <Wrap>
-      <Spin spinning={loginForm.loading}>
+      <Spin spinning={restoreForm.loading}>
         <Form
           name="restore"
-          fields={loginForm.form}
+          fields={restoreForm.form}
           form={FormInstance}
-          onFinish={loginForm.submit}
+          onFinish={restoreForm.submit}
           onFieldsChange={(changedFields, allFields) => {
-            loginForm.changeForm(allFields)
+            restoreForm.changeForm(allFields)
           }}
           className={form}
         >

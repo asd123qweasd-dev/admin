@@ -1,3 +1,12 @@
+const fse = require('fs-extra')
+const path = require('path')
+
+const color = {
+  green: '\x1b[42m%s\x1b[0m',
+  red: '\x1b[41m%s\x1b[0m'
+}
+const root = path.join(process.env.PWD, './src')
+const moduleName = process.argv[2]
 
 const fileList = (name) => {
   const PascalCaseName = toPascalCase(name)
@@ -85,7 +94,7 @@ const fileList = (name) => {
               })
             }
             dispatch(changeLoader(false))
-          }        
+          }
           `.replace(freeSpace, '').replace(/\n/, '')
       },
       {
@@ -126,12 +135,9 @@ const fileList = (name) => {
       }
     ]
   }
-  return templates[process.argv[2]]
+  return templates[moduleName]
 }
 
-const fse = require('fs-extra')
-const _ = require('lodash')
-const path = require('path')
 const arg = process.argv.filter(item => item !== process.argv[0] && item !== process.argv[1] && item !== process.argv[2])
 
 
@@ -139,7 +145,6 @@ const arg = process.argv.filter(item => item !== process.argv[0] && item !== pro
 // Проверяем что-бы не перезаписать
 // ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱
 arg.forEach(async originalPath => {
-  const root = path.join(process.env.PWD, './src')
   const filleName = originalPath.split('/').reverse()[0]
   const dataInfo = {
     name: filleName,
@@ -152,13 +157,13 @@ arg.forEach(async originalPath => {
       create(dataInfo)
   } catch (error) {
     if (error === 'exists') {
-      console.log(`${dataInfo.name} - уже существует`)
+      console.log(color.red, `${dataInfo.name} - уже существует`)
     }
   }
 })
 
 // ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-// 	Cоздания компонента
+// 	Cоздания модуля
 // ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱ ̱
 const create = (component) => {
   fse.mkdirp(component.path)
@@ -170,11 +175,11 @@ const create = (component) => {
         const fille = path.join(component.path, item.path, item.name)
         await fse.outputFile(fille, item.content)
       } catch (error) {
-        console.log(`При создании файла: ${item.name} - произошла неизвесная ошибка ((.`)
+        console.log(color.red, `При создании файла: ${item.name} - произошла неизвесная ошибка ((.`)
       }
     }
   })
-  console.log(`Компонент: ${component.name} - успешно создан.`)
+  console.log(color.green, `${moduleName}: ${component.name} - успешно создан.`)
 }
 
 function toPascalCase (str) {
