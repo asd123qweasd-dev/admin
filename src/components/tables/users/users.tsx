@@ -11,8 +11,6 @@ interface UsersProps {
 }
 
 const _Users: FC<UsersProps> = ({data, title}) => {
-  console.log(dayjs('2018-04-04T16:00:00.000Z').format());
-  
   const columns:ColumnsType<any> = [
     {
       title: 'id',
@@ -70,6 +68,7 @@ const _Users: FC<UsersProps> = ({data, title}) => {
         dataSource={data} 
         columns={columns}
         pagination={false}
+        rowKey="id"
         scroll={{
           x: true,
           scrollToFirstRowOnChange: true
