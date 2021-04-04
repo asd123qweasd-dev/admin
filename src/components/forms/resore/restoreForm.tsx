@@ -5,7 +5,7 @@ import { LoginFormData } from '~/store/loginForm/slice'
 import { useRestoreForm } from '~/store/restoreForm'
 import { UserOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
-import { FormVisibleType } from '~/pages/login/login'
+import { FormVisibleType } from '~/components/authForm'
 
 type RestoreFormProps = {
   changeForm: (type: FormVisibleType) => void

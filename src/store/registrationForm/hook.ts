@@ -10,11 +10,7 @@ export function useRegistrationForm() {
 
   return {
     ...registrationForm,
-    changeForm(data: RegistrationFormData) {
-      dispatch(changeForm(data))
-    },
-    submit() {
-      dispatch(submit())
-    }
+    changeForm: (data: RegistrationFormData) => dispatch(changeForm(data)),
+    submit: () => dispatch(submit())
   }
 }

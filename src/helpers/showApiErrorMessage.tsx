@@ -1,13 +1,9 @@
-import React from 'react'
 import { notification } from 'antd'
 
-
 export function showApiErrorMessage(error: any) {
-  if (!error.isAxiosError || !error.config.headers['showError']) return
-  const message = error?.response?.data?.message
-  let description = Object.values(error?.response?.data?.errors).map((item: any, key) => {
-    return <div key={key}>{item[0]}</div>
-  })
+  if (!error.isAxiosError || error.config.headers['showError'] === 'disabled') return
 
-  notification.error({ message, description })
+  const message = error?.response?.data?.message || error.message
+  
+  notification.error({ message })
 }

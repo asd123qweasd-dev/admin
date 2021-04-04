@@ -10,11 +10,7 @@ export function useLoginForm() {
 
   return {
     ...loginForm,
-    changeForm(data: LoginFormData) {
-      dispatch(changeForm(data))
-    },
-    submit() {
-      dispatch(submit())
-    }
+    changeForm: (data: LoginFormData) => dispatch(changeForm(data)),
+    submit: () => dispatch(submit())
   }
 }

@@ -2,32 +2,38 @@ import React, { FC } from 'react'
 import { Input, Form, Button, Spin, Checkbox } from 'antd'
 import { css } from '@emotion/css'
 import { LoginFormData } from '~/store/loginForm/slice'
-import { useLoginForm } from '~/store/loginForm'
+import { useRegistrationForm } from '~/store/registrationForm'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
-import { FormVisibleType } from '~/pages/login/login'
+import { FormVisibleType } from '~/components/authForm'
 
-type LoginFormProps = {
+type RegistrationProps = {
   changeForm: (type: FormVisibleType) => void
 }
 
-export const LoginForm: FC<LoginFormProps> = ({changeForm}) => {
-  const loginForm = useLoginForm()
+export const RegistrationForm: FC<RegistrationProps> = ({changeForm}) => {
+  const registrationForm = useRegistrationForm()
   const [FormInstance] = Form.useForm<LoginFormData>()
 
   return (
     <Wrap>
-      <Spin spinning={loginForm.loading}>
+      <Spin spinning={registrationForm.loading}>
         <Form
-          name="login"
-          fields={loginForm.form}
+          name="registration"
+          fields={registrationForm.form}
           form={FormInstance}
-          onFinish={loginForm.submit}
+          onFinish={registrationForm.submit}
           onFieldsChange={(changedFields, allFields) => {
-            loginForm.changeForm(allFields)
+            registrationForm.changeForm(allFields)
           }}
           className={form}
         >
+          <Form.Item
+            name="name"
+            rules={[{ required: true, message: 'Введите email' }]}
+          >
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Имя" />
+          </Form.Item>
           <Form.Item
             name="email"
             rules={[{ required: true, message: 'Введите email' }]}
@@ -44,6 +50,16 @@ export const LoginForm: FC<LoginFormProps> = ({changeForm}) => {
               placeholder="Пароль"
             />
           </Form.Item>
+          <Form.Item
+            name="password_confirmation"
+            rules={[{ required: true, message: 'Введите пароль' }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Пароль еще раз"
+            />
+          </Form.Item>
           <Form.Item>
             <MiddleWrap>
               <Form.Item name="remember" valuePropName="checked" noStyle>
@@ -58,9 +74,9 @@ export const LoginForm: FC<LoginFormProps> = ({changeForm}) => {
 
           <Form.Item>
             <Button type="primary" htmlType="submit" className="login-form-button">
-              Войти
+              зарегистрироваться
             </Button>
-            Или <BtnInline type="link" onClick={() => changeForm('registration')} >зарегистрироваться!</BtnInline>
+            Или <BtnInline type="link" onClick={() => changeForm('login')}>войти!</BtnInline>
           </Form.Item>
         </Form>
       </Spin>

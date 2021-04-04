@@ -4,12 +4,12 @@ import { TokenResponse } from '~/api/auth'
 import { AppThunk } from '../index'
 import { getSession, updateSession } from '~/helpers/session'
 import { notification } from 'antd'
-import { MeResponse } from '~/api/auth/me'
+import { User } from '~/api/users'
 
 type AuthState = {
   loading: boolean
   session: Maybe<TokenResponse>
-  user: Maybe<MeResponse>
+  user: Maybe<User>
 }
 
 const initialState: AuthState = {
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
     changeLoader: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload
     },
-    changeMe: (state, action: PayloadAction<Maybe<MeResponse>>) => {
+    changeMe: (state, action: PayloadAction<Maybe<User>>) => {
       state.user = action.payload
     }
   }
