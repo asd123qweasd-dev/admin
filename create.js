@@ -5,7 +5,8 @@ const color = {
   green: '\x1b[42m%s\x1b[0m',
   red: '\x1b[41m%s\x1b[0m'
 }
-const root = path.join(process.env.PWD, './src')
+
+const root = path.join(process.env.PWD)
 const moduleName = process.argv[2]
 
 const fileList = (name) => {
