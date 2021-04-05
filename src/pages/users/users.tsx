@@ -1,22 +1,30 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { Users as UsersTables } from '~/components/tables/users'
-import { ApiContainer } from '~/components/apiContainer'
+import { GetOne } from './getOne'
+import { GetAll } from './getAll'
+import { Create } from './create'
+import { Update } from './update'
 
 interface UsersProps { }
+type UserPage = FC<UsersProps> & {
+  GetAll: typeof GetAll
+  GetOne: typeof GetOne
+  Create: typeof Create
+  Update: typeof Update
+}
 
-const _Users: FC<UsersProps> = () => {
-
+const _Users: UserPage = () => {
   return (
     <Users>
-      <ApiContainer url="/users">
-        {(data: any) => (
-          <UsersTables title="Users" data={data} />
-        )}
-      </ApiContainer>
+      <GetAll />
     </Users>
   )
 }
+
+_Users.GetAll = GetAll
+_Users.GetOne = GetOne
+_Users.Create = Create
+_Users.Update = Update
 
 const Users = styled.div``
 

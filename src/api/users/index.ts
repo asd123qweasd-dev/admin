@@ -6,14 +6,14 @@ export type User = {
   id: number
   name: Maybe<string>,
   email: Maybe<string>,
-  email_verified_at: Maybe<Date>,
-  created_at: Maybe<Date>,
-  updated_at: Maybe<Date>,
-  deleted_at: Maybe<Date>,
+  email_verified_at: Maybe<string>,
+  created_at: Maybe<string>,
+  updated_at: Maybe<string>,
+  deleted_at: Maybe<string>,
   images: Maybe<string[]>
 }
 
-export {
+export const users = {
   getAll,
   getOne,
   create

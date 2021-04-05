@@ -6,7 +6,6 @@ export type UserField = {
   name: string
   email: string
   password: string
-  image: any
 }
 
 export function create(data: UserField): AxiosPromise<User> {

@@ -67,5 +67,5 @@ const Content = styled(Layout.Content)`
   margin: 24px 16px;
   padding: 24px;
   min-height: 280px;
-  height: calc(100vh - 64px);
+  /* height: calc(100vh - 64px); */
 `

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Table, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import dayjs from 'dayjs'
-
+import { NavLink } from 'react-router-dom'
 
 interface UsersProps {
   data: any[]|undefined
@@ -16,7 +16,8 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       title: 'id',
       dataIndex: 'id',
       key: 'id',
-      fixed: 'left'
+      fixed: 'left',
+      render: (value) => <NavLink to={`/users/${value}`}>{value}</NavLink>
     },
     {
       title: 'Имя',
@@ -58,13 +59,12 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       render: (value) => value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
     }
   ]
-
   return (
     <Users>
       { title && 
         <Title level={4}>{title}</Title>
       }
-      <Table 
+      <Table
         dataSource={data} 
         columns={columns}
         pagination={false}
@@ -72,6 +72,11 @@ const _Users: FC<UsersProps> = ({data, title}) => {
         scroll={{
           x: true,
           scrollToFirstRowOnChange: true
+        }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: event => {}
+          };
         }}
       />
     </Users>

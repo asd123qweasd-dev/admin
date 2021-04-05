@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Auth } from '~/layouts/auth'
 import { Main } from '~/layouts/main'
 import { useAuth } from '~/store/auth'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 interface LayoutsProps { }
 
@@ -11,7 +12,7 @@ const _Layouts: FC<LayoutsProps> = () => {
 
   return (
     <Layouts>
-      { isAuth ? <Main /> : <Auth />}
+      { isAuth ? <Router><Main /></Router> : <Auth />}
     </Layouts>
   )
 }
