@@ -17,7 +17,7 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       dataIndex: 'id',
       key: 'id',
       fixed: 'left',
-      render: (value) => <NavLink to={`/users/${value}`}>{value}</NavLink>
+      render: (value) => <NavLink to={`/users/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink>
     },
     {
       title: 'Имя',

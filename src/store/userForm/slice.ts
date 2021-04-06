@@ -6,6 +6,7 @@ import { userFormData } from './data'
 import api from '~/api'
 import { showErrorFields } from '~/helpers'
 
+export type FormType = 'update'|'create'
 export type UserFormData = FieldData[]
 export type UserFormModel = {
   email: string
@@ -37,13 +38,22 @@ export const userFormSlice = createSlice({
 
 export const { changeLoader, changeForm } = userFormSlice.actions
 
-export const submit = ({ email, name, password }: UserFormModel): AppThunk => async (dispatch, getState) => {
+export const create = (value: UserFormModel): AppThunk => async (dispatch, getState) => {
   const userForm = getState().userForm
   dispatch(changeLoader(true))
   try {
-    const req = { email, name, password }
+    await api.users.create(value)
+  } catch (err) {
+    showErrorFields(err, dispatch, changeForm, userForm.form)
+  }
+  dispatch(changeLoader(false))
+}
 
-    await api.users.create(req)
+export const update = (id: number, value: UserFormModel): AppThunk => async (dispatch, getState) => {
+  const userForm = getState().userForm
+  dispatch(changeLoader(true))
+  try {
+    await api.users.update(id, value)
   } catch (err) {
     showErrorFields(err, dispatch, changeForm, userForm.form)
   }

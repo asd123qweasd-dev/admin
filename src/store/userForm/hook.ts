@@ -1,6 +1,6 @@
 import { shallowEqual } from "react-redux"
 import { RootState, useAppDispatch, useAppSelector } from "~/store"
-import { submit, UserFormData, changeForm, UserFormModel, changeLoader } from "./slice"
+import { create, update, UserFormData, changeForm, UserFormModel, changeLoader, FormType } from "./slice"
 
 const userFormState = (state: RootState) => ({ ...state.userForm })
 
@@ -12,6 +12,8 @@ export function useUserForm() {
     ...userForm,
     changeLoader: (data: boolean) => dispatch(changeLoader(data)),
     changeForm: (data: UserFormData) => dispatch(changeForm(data)),
-    submit: (value: UserFormModel) => dispatch(submit(value))
+    create: (value: UserFormModel) => dispatch(create(value)),
+    update: (id: number, value: UserFormModel) => dispatch(update(id, value)),
+    remove: (id: number, value: UserFormModel) => dispatch(update(id, value))
   }
 }

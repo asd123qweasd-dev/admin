@@ -1,6 +1,7 @@
 import {getAll} from './getAll'
 import {getOne} from './getOne'
 import {create} from './create'
+import {update} from './update'
 
 export type User = {
   id: number
@@ -16,5 +17,6 @@ export type User = {
 export const users = {
   getAll,
   getOne,
-  create
+  create,
+  update
 }

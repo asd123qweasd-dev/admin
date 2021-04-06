@@ -4,9 +4,9 @@ import { User } from ".";
 
 
 
-export function me(): AxiosPromise<User> {
+export function remove(id: number): AxiosPromise<User> {
   return axios({
-    url: '/users',
-    method: 'get'
+    url: `/users/${id}`,
+    method: 'DELETE'
   })
 }

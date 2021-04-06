@@ -4,9 +4,16 @@ import { User } from ".";
 
 
 
-export function me(): AxiosPromise<User> {
+export type UserField = {
+  name: string
+  email: string
+  password: string
+}
+
+export function update(id: number, data: UserField): AxiosPromise<User> {
   return axios({
-    url: '/users',
-    method: 'get'
+    url: `/users/${id}`,
+    method: 'put',
+    data
   })
 }

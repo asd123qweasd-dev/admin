@@ -4,6 +4,7 @@ import { Button, Form, Input, Spin, Typography } from 'antd'
 import { useUserForm } from '~/store/userForm'
 import { css } from '@emotion/css'
 import api from '~/api'
+import { UserFormModel } from '~/store/userForm/slice'
 
 interface UserProps {
   id?: number
@@ -14,16 +15,15 @@ const createText = {
   submit: 'Создать'
 }
 const updateText = {
-  title: 'Обновить пользоваля',
-  submit: 'Обновить'
+  title: 'Редактирование пользователя',
+  submit: 'Сохранить'
 }
 
 const _User: FC<UserProps> = ({id}) => {
   const userForm = useUserForm()
-  const [FormInstance] = Form.useForm()
+  const [FormInstance] = Form.useForm<UserFormModel>()
 
-  const hasCreate = () => Boolean(!id)
-  const text = hasCreate() ? createText : updateText
+  const text = id ? updateText : createText
 
   useEffect(function(){
     getUserData()
@@ -33,10 +33,19 @@ const _User: FC<UserProps> = ({id}) => {
     if (!id) return
     userForm.changeLoader(true)
     try {
-      const {data:{name, email}} = await api.users.getOne(id)
-      FormInstance.setFieldsValue({name, email})
+      const {data} = await api.users.getOne(id)
+      FormInstance.setFieldsValue({
+        name: data.name || '',
+        email: data.email || ''
+      })
     } catch (err) {}
     userForm.changeLoader(false)
+  }
+
+  function submit (value:UserFormModel) {
+    id
+      ? userForm.update(id, value)
+      : userForm.create(value)
   }
 
   return (
@@ -47,7 +56,7 @@ const _User: FC<UserProps> = ({id}) => {
           name="restore"
           fields={userForm.form}
           form={FormInstance}
-          onFinish={userForm.submit}
+          onFinish={submit}
           onFieldsChange={(changedFields, allFields) => {
             userForm.changeForm(allFields)
           }}

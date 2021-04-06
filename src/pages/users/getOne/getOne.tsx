@@ -42,10 +42,18 @@ const _GetOne: FC<GetOneProps> = () => {
           </Descriptions>
         )}
       </ApiContainer>
+      <Footer>
+        <Button danger>Удалить</Button>
+      </Footer>
     </GetOne>
   )
 }
 
 const GetOne = styled.div``
-
+const Footer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 0;
+`
 export { _GetOne as GetOne }
