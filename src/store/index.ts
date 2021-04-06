@@ -4,14 +4,14 @@ import { loginFormSlice } from './loginForm'
 import { registrationFormSlice } from './registrationForm'
 import { authSlice } from './auth'
 import { restoreFormSlice } from '~/store/restoreForm'
-import {userFormSlice} from './userForm'
+import { usersSlice } from './users'
 
 const rootReducer = combineReducers({
   auth: authSlice.reducer,
   loginForm: loginFormSlice.reducer,
   registrationForm: registrationFormSlice.reducer,
   restoreForm: restoreFormSlice.reducer,
-  userForm: userFormSlice.reducer
+  users: usersSlice.reducer
 })
 
 export const store = configureStore({

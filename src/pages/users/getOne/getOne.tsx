@@ -5,12 +5,14 @@ import { Button, Descriptions } from 'antd'
 import { ApiContainer } from '~/components/apiContainer'
 import { User } from '~/api/users'
 import dayjs from 'dayjs'
+import { useUsers } from '~/store/users'
 
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
   const { id }: any = useParams()
   const history = useHistory()
+  const userForm = useUsers()
 
   function formatDate(value: string | null | undefined) {
     return value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
@@ -43,7 +45,7 @@ const _GetOne: FC<GetOneProps> = () => {
         )}
       </ApiContainer>
       <Footer>
-        <Button danger>Удалить</Button>
+        <Button danger onClick={() => userForm.remove(id)}>Удалить</Button>
       </Footer>
     </GetOne>
   )

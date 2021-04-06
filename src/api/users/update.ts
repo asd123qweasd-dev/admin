@@ -13,6 +13,7 @@ export type UserField = {
 export function update(id: number, data: UserField): AxiosPromise<User> {
   return axios({
     url: `/users/${id}`,
+    headers: { showError: false },
     method: 'put',
     data
   })

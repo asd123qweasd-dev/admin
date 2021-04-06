@@ -1,5 +1,5 @@
 
-export const userFormData = [
+export const usersFormData = [
   {
     touched: false,
     validating: false,

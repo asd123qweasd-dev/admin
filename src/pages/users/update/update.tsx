@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { User as UserForm } from '~/components/forms/user'
+import { UserUpdate } from '~/components/forms/userUpdate'
 import { useParams } from 'react-router'
 
 interface UpdateProps { }
@@ -10,7 +10,7 @@ const _Update: FC<UpdateProps> = () => {
 
   return (
     <Update>
-      <UserForm id={Number(id)} />
+      <UserUpdate id={Number(id)} />
     </Update>
   )
 }

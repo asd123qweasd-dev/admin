@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import {User as UserForm} from '~/components/forms/user'
+import { UserCreate } from '~/components/forms/userCreate'
 
-interface CreateProps {}
+interface CreateProps { }
 
 const _Create: FC<CreateProps> = () => {
   return (
     <Create>
-      <UserForm />
+      <UserCreate />
     </Create>
   )
 }

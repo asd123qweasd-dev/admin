@@ -11,6 +11,7 @@ export type UserField = {
 export function create(data: UserField): AxiosPromise<User> {
   return axios({
     url: '/users',
+    headers: { showError: false },
     method: 'post',
     data
   })
