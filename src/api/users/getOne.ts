@@ -4,7 +4,7 @@ import { User } from ".";
 
 
 
-export function getOne(id: number): AxiosPromise<User> {
+export function getOne(id: string): AxiosPromise<User> {
   return axios({
     url: `/users/${id}`,
     method: 'get'

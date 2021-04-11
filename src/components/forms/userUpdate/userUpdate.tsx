@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
-import { useUsers, UsersModel } from '~/store/users'
 import { css } from '@emotion/css'
 
 interface UserCreateProps {
@@ -9,24 +8,22 @@ interface UserCreateProps {
 }
 
 const _UserUpdate: FC<UserCreateProps> = ({id}) => {
-  const users = useUsers()
-  const [FormInstance] = Form.useForm<UsersModel>()
+  const [FormInstance] = Form.useForm()
 
-  function submit (value:UsersModel) {
-    users.update(id, value)
+  function submit () {
   }
 
   return (
     <User>
-      <Spin spinning={users.loading}>
+      <Spin spinning={false}>
         <Title level={3}>Редактирование пользователя</Title>
         <Form
           name="userUpdate"
-          fields={users.formUpdate}
+          // fields={users.formUpdate}
           form={FormInstance}
           onFinish={submit}
           onFieldsChange={(changedFields, allFields) => {
-            users.handleFormUpdate(allFields)
+            // users.handleFormUpdate(allFields)
           }}
           className={form}
         >

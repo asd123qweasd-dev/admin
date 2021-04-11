@@ -17,6 +17,7 @@ export const Main: FunctionComponent = () => {
     getMe()
   }, [])
 
+
   return (
     <BrowserRouter>
       <Spin spinning={loading}>

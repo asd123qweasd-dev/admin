@@ -1,52 +1,46 @@
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import axios from "~/lib/axios";
-import { ApiPagination } from '~/api';
 import { Pagination, Spin } from 'antd';
+import useSWR from 'swr'
+import {pageScrollUp} from '~/helpers/pageScrollUp'
 
 interface ApiContainerProps {
   url: string
 }
+const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
 const _ApiContainer: FC<PropsWithChildren<ApiContainerProps>> = ({ children, url: propsUrl }) => {
-  const [response, setResponse] = useState<ApiPagination<any>>()
+  const [softData, setSoftData] = useState<any>()
   const [url, setUrl] = useState(propsUrl)
-  const [loading, setLoading] = useState(false)
+  const { data, error } = useSWR(url, fetcher)
 
   useEffect(function () {
-    getData()
-  }, [url])
+    if (!data) return
+    setSoftData(data)
+  }, [data])
   
-  const hasPagination = () => Boolean(response?.hasOwnProperty('data') && response?.hasOwnProperty('meta'))
-  console.log(hasPagination())
-
-  async function getData() {
-    setLoading(true)
-    try {
-      const { data }: any = await axios({ url, method: 'get' })
-      setResponse(data)
-    } catch (err) { }
-    setLoading(false)
-  }
+  const hasPagination = () => Boolean(softData?.hasOwnProperty('data') && softData?.hasOwnProperty('meta'))
 
   function paginationChange(page: number, pageSize?: number) {
-    setUrl(String(response?.meta?.links[page]?.url || 0))
+    pageScrollUp()
+    setUrl(String(softData?.meta?.links[page]?.url || 0))
   }
 
   return (
     <ApiContainer>
-      <Spin spinning={loading}>
+      <Spin spinning={(!data && !error)}>
         { //@ts-ignore
-          children(hasPagination() ? response.data : response)
+          children(hasPagination() ? softData.data : softData)
         }
         { hasPagination() &&
           <PaginationWrap>
             <Pagination
-              current={response?.meta?.current_page}
-              total={response?.meta?.total}
-              pageSize={response?.meta?.per_page || 0}
+              current={softData?.meta?.current_page}
+              total={softData?.meta?.total}
+              pageSize={softData?.meta?.per_page || 0}
               onChange={paginationChange}
-              />
+            />
           </PaginationWrap>
         }
       </Spin>

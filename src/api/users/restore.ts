@@ -4,9 +4,9 @@ import { User } from ".";
 
 
 
-export function me(): AxiosPromise<User> {
+export function restore(id: string): AxiosPromise<User> {
   return axios({
-    url: '/users',
-    method: 'get'
+    url: `/users/${id}/restore`,
+    method: 'post'
   })
 }

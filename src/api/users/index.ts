@@ -3,6 +3,7 @@ import { getOne } from './getOne'
 import { create } from './create'
 import { update } from './update'
 import { remove } from './remove'
+import { restore } from './restore'
 
 export type User = {
   id: number
@@ -20,5 +21,6 @@ export const users = {
   getOne,
   create,
   update,
-  remove
+  remove,
+  restore
 }
