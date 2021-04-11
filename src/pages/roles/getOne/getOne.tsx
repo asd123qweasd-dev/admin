@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { useHistory, useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Spin } from 'antd'
+import { Button, Descriptions, Spin, Tag } from 'antd'
 import dayjs from 'dayjs'
 import api from '~/api'
 import { mutate } from 'swr'
-import { useGetUser } from '~/hooks/useGetUser'
+import { useGetRole } from '~/hooks/useGetRole'
 
 interface GetOneProps { }
 
@@ -13,7 +13,7 @@ const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
   const location = useLocation()
-  const user = useGetUser(id)
+  const user = useGetRole(id)
   const [loading, setLoading] = useState<boolean>(false)
 
 
@@ -24,23 +24,10 @@ const _GetOne: FC<GetOneProps> = () => {
   async function remove() {
     setLoading(true)
     try {
-      const { data } = await api.users.remove(id)
+      const { data } = await api.roles.remove(id)
       mutate(location.pathname, { ...data })
     } catch (err) { }
     setLoading(false)
-  }
-
-  async function restore() {
-    setLoading(true)
-    try {
-      const { data } = await api.users.restore(id)
-      mutate(location.pathname, { ...data })
-    } catch (err) { }
-    setLoading(false)
-  }
-  
-  function formatDate(value: string | null | undefined) {
-    return value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
   }
 
   return (
@@ -56,17 +43,14 @@ const _GetOne: FC<GetOneProps> = () => {
         >
           <Descriptions.Item label="id">{id}</Descriptions.Item>
           <Descriptions.Item label="Имя">{user.data?.name}</Descriptions.Item>
-          <Descriptions.Item label="Email">{user.data?.email}</Descriptions.Item>
-          <Descriptions.Item label="Подтвержден">{formatDate(user.data?.email_verified_at)}</Descriptions.Item>
-          <Descriptions.Item label="Создан">{formatDate(user.data?.created_at)}</Descriptions.Item>
-          <Descriptions.Item label="Обновлен">{formatDate(user.data?.updated_at)}</Descriptions.Item>
-          <Descriptions.Item label="Удален">{formatDate(user.data?.deleted_at)}</Descriptions.Item>
+          <Descriptions.Item label="Права">
+            {user.data?.permissions?.map(item => {
+              return <Tag color="blue" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
+            })}
+          </Descriptions.Item>
         </Descriptions>
         <Footer>
-          {user.data?.deleted_at
-            ? <Button onClick={restore}>Восстановить</Button>
-            : <Button danger onClick={remove}>Удалить</Button>
-          }
+          <Button danger onClick={remove}>Удалить</Button>
         </Footer>
       </Spin>
     </GetOne>

@@ -1,31 +1,21 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
-import api from '~/api'
 import { errorFields } from '~/helpers/showErrorFields'
-import { useGetUser } from '~/hooks/useGetUser'
-import { useHistory } from 'react-router-dom'
+import api from '~/api'
+import { useHistory } from 'react-router'
 
-interface UserCreateProps {
-  id: string
-}
+interface CreateRoleFormProps { }
 
-const _UserUpdate: FC<UserCreateProps> = ({ id }) => {
+const _CreateRoleForm: FC<CreateRoleFormProps> = () => {
   const [FormInstance] = Form.useForm()
   const history = useHistory()
-  const user = useGetUser(id)
-
-  useEffect(function () {
-    if (!user.data) return
-    const { name, email } = user.data
-    FormInstance.setFieldsValue({ name, email })
-  }, [user])
 
   async function submit(value: any) {
     try {
-      const { data } = await api.users.update(id, value)
-      history.push(`/users/${data.id}`)
+      const { data } = await api.roles.create(value)
+      history.push(`/roles/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)
     }
@@ -34,29 +24,23 @@ const _UserUpdate: FC<UserCreateProps> = ({ id }) => {
   return (
     <User>
       <Spin spinning={false}>
-        <Title level={3}>Редактирование пользователя</Title>
+        <Title level={3}>Создать новую роль</Title>
         <Form
-          name="userUpdate"
+          name="CreateRoleForm"
           form={FormInstance}
           onFinish={submit}
           className={form}
         >
           <Form.Item
             name="name"
-            rules={[{ required: true, message: 'Введите Имя' }]}
-          >
-            <Input placeholder="Имя" />
-          </Form.Item>
-          <Form.Item
-            name="email"
             rules={[{ required: true, message: 'Введите email' }]}
           >
-            <Input placeholder="Email" />
+            <Input placeholder="Имя" />
           </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Сохранить
+              Создать
             </Button>
           </Form.Item>
         </Form>
@@ -73,4 +57,4 @@ const form = css`
     max-width: 300px;
   }
 `
-export { _UserUpdate as UserUpdate }
+export { _CreateRoleForm as CreateRoleForm }

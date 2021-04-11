@@ -23,6 +23,9 @@ const _Navigation: FC<NavigationProps> = () => {
       <Menu.Item key="/users" icon={<UserOutlined />}>
         <NavLink to="/users">Пользователи</NavLink>
       </Menu.Item>
+      <Menu.Item key="/roles" icon={<UserOutlined />}>
+        <NavLink to="/roles">Роли</NavLink>
+      </Menu.Item>
     </Menu>
   )
 }

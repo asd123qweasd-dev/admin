@@ -1,5 +1,6 @@
 import { auth } from './auth'
 import { users } from './users'
+import { roles } from './roles'
 
 export type ApiPaginationLinks = {
   first: Maybe<string>
@@ -30,7 +31,8 @@ export type ApiPagination<T> = {
 
 export const api = {
   auth,
-  users
+  users,
+  roles
 }
 
 export default api
