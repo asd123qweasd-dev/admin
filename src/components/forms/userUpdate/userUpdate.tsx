@@ -4,26 +4,29 @@ import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
 import api from '~/api'
 import { errorFields } from '~/helpers/showErrorFields'
-import {useUser} from '~/hooks/useUser'
+import { useUser } from '~/hooks/useUser'
+import { useHistory } from 'react-router-dom'
 
 interface UserCreateProps {
   id: string
 }
 
-const _UserUpdate: FC<UserCreateProps> = ({id}) => {
+const _UserUpdate: FC<UserCreateProps> = ({ id }) => {
   const [FormInstance] = Form.useForm()
+  const history = useHistory()
   const user = useUser(id)
-  
-  useEffect(function(){
+
+  useEffect(function () {
     if (!user.data) return
-    const {name, email} = user.data
+    const { name, email } = user.data
     FormInstance.setFieldsValue({ name, email })
   }, [user])
 
-  async function submit (value: any) {
+  async function submit(value: any) {
     try {
-      await api.users.update(id, value)
-    }catch(err){
+      const { data } = await api.users.update(id, value)
+      history.push(`/users/${data.id}`)
+    } catch (err) {
       errorFields(err, FormInstance)
     }
   }

@@ -2,13 +2,23 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
+import { errorFields } from '~/helpers/showErrorFields'
+import api from '~/api'
+import { useHistory } from 'react-router'
 
-interface UserCreateProps {}
+interface UserCreateProps { }
 
 const _UserCreate: FC<UserCreateProps> = () => {
   const [FormInstance] = Form.useForm()
+  const history = useHistory()
 
-  function submit () {
+  async function submit(value: any) {
+    try {
+      const { data } = await api.users.create(value)
+      history.push(`/users/${data.id}`)
+    } catch (err) {
+      errorFields(err, FormInstance)
+    }
   }
 
   return (
@@ -17,11 +27,8 @@ const _UserCreate: FC<UserCreateProps> = () => {
         <Title level={3}>Создать нового пользоваля</Title>
         <Form
           name="userCreate"
-          // fields={users.formCreate}
           form={FormInstance}
           onFinish={submit}
-          onFieldsChange={(changedFields, allFields) => {
-          }}
           className={form}
         >
           <Form.Item

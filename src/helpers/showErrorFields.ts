@@ -1,7 +1,6 @@
 import { AppDispatch } from "../store"
 import { FieldData } from 'rc-field-form/lib/interface'
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
-import { notification } from "antd"
 
 export function showErrorFields (err: any, dispatch:AppDispatch, action: ActionCreatorWithPayload<any, string>, form: FieldData[]) {
   if (err.isAxiosError) {
@@ -20,8 +19,6 @@ export function showErrorFields (err: any, dispatch:AppDispatch, action: ActionC
 }
 
 export function errorFields (err: any, FormInstance:any) {
-  console.dir(err);
-  
   if (!err?.isAxiosError && err?.response?.status !== 422) return
   const errs = []
   for (let key in err.response.data.errors) {
