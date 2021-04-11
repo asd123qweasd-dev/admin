@@ -1,80 +1,74 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { useHistory, useLocation, useParams } from 'react-router'
 import { Button, Descriptions, Spin } from 'antd'
-import { User } from '~/api/users'
 import dayjs from 'dayjs'
 import api from '~/api'
-import useSWR, { mutate } from 'swr'
-import axios from '~/lib/axios'
+import { mutate } from 'swr'
+import { useUser } from '~/hooks/useUser'
 
 interface GetOneProps { }
-const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
 const _GetOne: FC<GetOneProps> = () => {
-  const { id } = useParams<{id: string}>()
+  const { id } = useParams<{ id: string }>()
   const history = useHistory()
   const location = useLocation()
-  const {data, error} = useSWR<User>(location.pathname, fetcher)
-  const swrLoading = (!data && !error)
-  const [loading, setLoading] = useState<boolean>(!data && !error)
+  const user = useUser(id)
+  const [loading, setLoading] = useState<boolean>(false)
 
-  console.log(data);
+
+  function edit() {
+    history.push(`/users/${id}/update`)
+  }
+
+  async function remove() {
+    setLoading(true)
+    try {
+      const { data } = await api.users.remove(id)
+      mutate(location.pathname, { ...data })
+    } catch (err) { }
+    setLoading(false)
+  }
+
+  async function restore() {
+    setLoading(true)
+    try {
+      const { data } = await api.users.restore(id)
+      mutate(location.pathname, { ...data })
+    } catch (err) { }
+    setLoading(false)
+  }
   
-  useEffect(function(){
-    setLoading(!data && !error)
-  }, [data, error])
-
   function formatDate(value: string | null | undefined) {
     return value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
   }
 
-  function edit () {
-    history.push(`/users/${id}/update`)
-  }
-
-  async function remove () {
-    setLoading(true)
-    try {
-      await mutate(location.pathname, api.users.remove(id).then(res => res.data))
-    }catch(err) {}
-    setLoading(false)
-  }
-
-  async function restore () {
-    setLoading(true)
-    try {
-      await mutate(location.pathname, api.users.restore(id).then(res => res.data))
-    }catch(err) {}
-    setLoading(false)
-  }
-  
   return (
     <GetOne>
-      <Spin spinning={swrLoading || loading}>
+      <Spin spinning={user.loading || loading}>
         <Descriptions
           colon={true}
           column={1}
           bordered
           labelStyle={{ width: '200px' }}
-          title={data?.name}
+          title={user.data?.name}
           extra={<Button type="primary" onClick={edit}>Редактировать</Button>}
-          >
+        >
           <Descriptions.Item label="id">{id}</Descriptions.Item>
-          <Descriptions.Item label="Имя">{data?.name}</Descriptions.Item>
-          <Descriptions.Item label="Email">{data?.email}</Descriptions.Item>
-          <Descriptions.Item label="Подтвержден">{formatDate(data?.email_verified_at)}</Descriptions.Item>
-          <Descriptions.Item label="Создан">{formatDate(data?.created_at)}</Descriptions.Item>
-          <Descriptions.Item label="Обновлен">{formatDate(data?.updated_at)}</Descriptions.Item>
-          <Descriptions.Item label="Удален">{formatDate(data?.deleted_at)}</Descriptions.Item>
+          <Descriptions.Item label="Имя">{user.data?.name}</Descriptions.Item>
+          <Descriptions.Item label="Email">{user.data?.email}</Descriptions.Item>
+          <Descriptions.Item label="Подтвержден">{formatDate(user.data?.email_verified_at)}</Descriptions.Item>
+          <Descriptions.Item label="Создан">{formatDate(user.data?.created_at)}</Descriptions.Item>
+          <Descriptions.Item label="Обновлен">{formatDate(user.data?.updated_at)}</Descriptions.Item>
+          <Descriptions.Item label="Удален">{formatDate(user.data?.deleted_at)}</Descriptions.Item>
         </Descriptions>
         <Footer>
-          { data?.deleted_at
+          {user.data?.deleted_at
             ? <Button onClick={restore}>Восстановить</Button>
             : <Button danger onClick={remove}>Удалить</Button>
           }
         </Footer>
-        </Spin>
+      </Spin>
     </GetOne>
   )
 }

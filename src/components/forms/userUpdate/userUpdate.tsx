@@ -1,16 +1,31 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
+import api from '~/api'
+import { errorFields } from '~/helpers/showErrorFields'
+import {useUser} from '~/hooks/useUser'
 
 interface UserCreateProps {
-  id: number
+  id: string
 }
 
 const _UserUpdate: FC<UserCreateProps> = ({id}) => {
   const [FormInstance] = Form.useForm()
+  const user = useUser(id)
+  
+  useEffect(function(){
+    if (!user.data) return
+    const {name, email} = user.data
+    FormInstance.setFieldsValue({ name, email })
+  }, [user])
 
-  function submit () {
+  async function submit (value: any) {
+    try {
+      await api.users.update(id, value)
+    }catch(err){
+      errorFields(err, FormInstance)
+    }
   }
 
   return (
@@ -19,17 +34,13 @@ const _UserUpdate: FC<UserCreateProps> = ({id}) => {
         <Title level={3}>Редактирование пользователя</Title>
         <Form
           name="userUpdate"
-          // fields={users.formUpdate}
           form={FormInstance}
           onFinish={submit}
-          onFieldsChange={(changedFields, allFields) => {
-            // users.handleFormUpdate(allFields)
-          }}
           className={form}
         >
           <Form.Item
             name="name"
-            rules={[{ required: true, message: 'Введите email' }]}
+            rules={[{ required: true, message: 'Введите Имя' }]}
           >
             <Input placeholder="Имя" />
           </Form.Item>
@@ -38,12 +49,6 @@ const _UserUpdate: FC<UserCreateProps> = ({id}) => {
             rules={[{ required: true, message: 'Введите email' }]}
           >
             <Input placeholder="Email" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Введите email' }]}
-          >
-            <Input.Password placeholder="Пароль" />
           </Form.Item>
 
           <Form.Item>

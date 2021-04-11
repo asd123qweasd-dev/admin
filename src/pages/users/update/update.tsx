@@ -10,7 +10,7 @@ const _Update: FC<UpdateProps> = () => {
 
   return (
     <Update>
-      <UserUpdate id={Number(id)} />
+      <UserUpdate id={id} />
     </Update>
   )
 }

@@ -10,10 +10,10 @@ export type UserField = {
   password: string
 }
 
-export function update(id: number, data: UserField): AxiosPromise<User> {
+export function update(id: string, data: UserField): AxiosPromise<User> {
   return axios({
     url: `/users/${id}`,
-    headers: { showError: false },
+    headers: { showError: 'disabled' },
     method: 'put',
     data
   })

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getSession } from '~/helpers/session';
-import {showApiErrorMessage} from '~/helpers/showApiErrorMessage'
+import {apiErrorHandler} from '~/helpers/apiErrorHandler'
 
 
 const instance = axios.create({
@@ -19,7 +19,7 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  showApiErrorMessage(error)
+  apiErrorHandler(error)
   return Promise.reject(error);
 });
 
