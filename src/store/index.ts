@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   auth: authSlice.reducer,
   loginForm: loginFormSlice.reducer,
   registrationForm: registrationFormSlice.reducer,
-  restoreForm: restoreFormSlice.reducer
+  restoreForm: restoreFormSlice.reducer,
 })
 
 export const store = configureStore({

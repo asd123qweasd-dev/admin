@@ -10,11 +10,7 @@ export function useRestoreForm() {
 
   return {
     ...restoreForm,
-    changeForm(data: RestoreFormData) {
-      dispatch(changeForm(data))
-    },
-    submit() {
-      dispatch(submit())
-    }
+    changeForm: (data: RestoreFormData) => dispatch(changeForm(data)),
+    submit: () => dispatch(submit())
   }
 }

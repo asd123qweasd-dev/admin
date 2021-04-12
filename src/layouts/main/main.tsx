@@ -17,6 +17,7 @@ export const Main: FunctionComponent = () => {
     getMe()
   }, [])
 
+
   return (
     <BrowserRouter>
       <Spin spinning={loading}>
@@ -41,7 +42,7 @@ export const Main: FunctionComponent = () => {
 }
 
 const MainLayout = styled(Layout)`
-  height: 100vh;
+  min-height: 100vh;
   .trigger {
     font-size: 18px;
     line-height: 64px;
@@ -67,4 +68,5 @@ const Content = styled(Layout.Content)`
   margin: 24px 16px;
   padding: 24px;
   min-height: 280px;
+  /* height: calc(100vh - 64px); */
 `

@@ -5,7 +5,7 @@ export const loginFormData = [
     validating: false,
     errors: [],
     name: ['email'],
-    value: 'user@user.com'
+    value: 'super-admin@admin.com'
   },
   {
     touched: false,

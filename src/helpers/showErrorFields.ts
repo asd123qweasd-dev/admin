@@ -17,3 +17,15 @@ export function showErrorFields (err: any, dispatch:AppDispatch, action: ActionC
     dispatch(action(newData))
   }
 }
+
+export function errorFields (err: any, FormInstance:any) {
+  if (!err?.isAxiosError && err?.response?.status !== 422) return
+  const errs = []
+  for (let key in err.response.data.errors) {
+    errs.push({
+      name: key,
+      errors: err.response.data.errors[key]
+    })
+  }
+  FormInstance.setFields(errs)
+}
