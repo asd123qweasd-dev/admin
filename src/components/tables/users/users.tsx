@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { Table, Typography } from 'antd'
+import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import dayjs from 'dayjs'
 import { NavLink } from 'react-router-dom'
@@ -23,6 +23,14 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       title: 'Имя',
       dataIndex: 'name',
       key: 'name',
+    },
+    {
+      title: 'Роль',
+      dataIndex: 'roles',
+      key: 'roles',
+      render: (values) => values.map((item:any) => {
+        return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
+      })
     },
     {
       title: 'email',

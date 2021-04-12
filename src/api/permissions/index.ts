@@ -4,19 +4,19 @@ import { create } from './create'
 import { update } from './update'
 import { remove } from './remove'
 import { assign } from './assign'
-import { Permissions } from '../permissions/'
+import {Role} from '../roles'
 
-export type Role = {
+export type Permissions = {
   id: number
   name: Maybe<string>
-  permissions?: Permissions[]
+  roles?: Role[]
 }
 
-export type RoleField = {
+export type PermissionsField = {
   name: string
 }
 
-export const roles = {
+export const permissions = {
   getAll,
   getOne,
   create,

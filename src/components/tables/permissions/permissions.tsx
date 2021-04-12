@@ -2,41 +2,40 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
-import dayjs from 'dayjs'
 import { NavLink } from 'react-router-dom'
 
-interface RolesProps {
+interface PermissionsProps {
   data: any[]|undefined
   title?: string
 }
 
-const _Roles: FC<RolesProps> = ({data, title}) => {
+const _Permissions: FC<PermissionsProps> = ({data, title}) => {
   const columns:ColumnsType<any> = [
     {
       title: 'id',
       dataIndex: 'id',
       key: 'id',
       fixed: 'left',
-      render: (value) => <NavLink to={`/roles/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink>
+      render: (value) => <NavLink to={`/permissions/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink>
+    },
+    {
+      title: 'Право',
+      dataIndex: 'name',
+      key: 'name',
+      render: (value) => <Tag color="processing">{ value }</Tag>
     },
     {
       title: 'Роль',
-      dataIndex: 'name',
-      key: 'name',
-      render: (value) => <Tag color="orange">{ value }</Tag>
-    },
-    {
-      title: 'Права',
-      dataIndex: 'permissions',
-      key: 'permissions',
+      dataIndex: 'roles',
+      key: 'roles',
       render: (values) => values.map((item:any) => {
-        return <Tag color="processing" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
+        return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
       })
     }
   
   ]
   return (
-    <Roles>
+    <Permissions>
       { title && 
         <Title level={4}>{title}</Title>
       }
@@ -55,11 +54,11 @@ const _Roles: FC<RolesProps> = ({data, title}) => {
           };
         }}
       />
-    </Roles>
+    </Permissions>
   )
 }
 
-const Roles = styled.div``
+const Permissions = styled.div``
 const Title = styled(Typography.Title)``
 
-export { _Roles as Roles }
+export { _Permissions as Permissions }

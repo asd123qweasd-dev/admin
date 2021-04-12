@@ -1,35 +1,36 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, memo, useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
 import api from '~/api'
 import { errorFields } from '~/helpers/showErrorFields'
 import { useHistory } from 'react-router-dom'
-import { useGetRole } from '~/hooks/useGetRole'
-import { mutate } from 'swr'
+import { useGetPermissions } from '~/hooks/useGetPermissions'
+import {mutate} from 'swr'
 
-interface UpdateRoleFormProps {
+interface UpdatePermissionsFormProps {
   id: string
 }
 
-const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
+const _UpdatePermissionsForm: FC<UpdatePermissionsFormProps> = memo(({ id }) => {
   const [FormInstance] = Form.useForm()
   const [loading, setLoading] = useState<boolean>(false)
   const history = useHistory()
-  const user = useGetRole(id)
+  const permission = useGetPermissions(id)
 
   useEffect(function () {
-    if (!user.data  || loading) return
-    const { name } = user.data
+    if (!permission.data || loading) return
+    const { name } = permission.data
     FormInstance.setFieldsValue({ name })
-  }, [user])
+  }, [permission])
 
   async function submit(value: any) {
     setLoading(true)
     try {
-      const { data } = await api.roles.update(id, value)
-      mutate(`/roles/${id}`, {...user.data, ...data})
-      history.push(`/roles/${data.id}`)
+      const { data } = await api.permissions.update(id, value)
+      console.log(permission);
+      mutate(`/permissions/${id}`, {...permission.data, ...data})
+      history.push(`/permissions/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)
     }
@@ -37,11 +38,11 @@ const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
   }
 
   return (
-    <User>
-      <Spin spinning={user.loading || loading}>
-        <Title level={3}>Редактирование роли</Title>
+    <Permissions>
+      <Spin spinning={permission.loading || loading}>
+        <Title level={3}>Редактирование права</Title>
         <Form
-          name="UpdateRoleForm"
+          name="UpdatePermissionsForm"
           form={FormInstance}
           onFinish={submit}
           className={form}
@@ -60,11 +61,11 @@ const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
           </Form.Item>
         </Form>
       </Spin>
-    </User>
+    </Permissions>
   )
-}
+})
 
-const User = styled.div``
+const Permissions = styled.div``
 const Title = styled(Typography.Title)``
 const form = css`
   &&{
@@ -72,4 +73,4 @@ const form = css`
     max-width: 300px;
   }
 `
-export { _UpdateRoleForm as UpdateRoleForm }
+export { _UpdatePermissionsForm as UpdatePermissionsForm }

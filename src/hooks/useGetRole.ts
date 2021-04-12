@@ -4,8 +4,10 @@ import axios from '~/lib/axios'
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data)
 
-export function useGetRole(id: string) {
-  const { data, error } = useSWR<Role>(`/roles/${id}`, fetcher)
+type RoleResult<T> = T extends string ? Role : Role[]
+
+export function useGetRole<T>(id?: T) {
+  const { data, error } = useSWR<RoleResult<T>>(`/roles/${id || ''}`, fetcher)
 
   return {
     data,
