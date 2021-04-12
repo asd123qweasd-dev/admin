@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
@@ -11,19 +11,22 @@ interface CreateRoleFormProps { }
 const _CreateRoleForm: FC<CreateRoleFormProps> = () => {
   const [FormInstance] = Form.useForm()
   const history = useHistory()
+  const [loading, setLoading] = useState<boolean>(false)
 
   async function submit(value: any) {
+    setLoading(true)
     try {
       const { data } = await api.roles.create(value)
       history.push(`/roles/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)
     }
+    setLoading(false)
   }
 
   return (
     <User>
-      <Spin spinning={false}>
+      <Spin spinning={loading}>
         <Title level={3}>Создать новую роль</Title>
         <Form
           name="CreateRoleForm"

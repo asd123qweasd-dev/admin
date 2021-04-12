@@ -1,10 +1,8 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
-import { useHistory, useLocation, useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import { Button, Descriptions, Spin, Tag } from 'antd'
-import dayjs from 'dayjs'
 import api from '~/api'
-import { mutate } from 'swr'
 import { useGetRole } from '~/hooks/useGetRole'
 
 interface GetOneProps { }
@@ -12,20 +10,19 @@ interface GetOneProps { }
 const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
-  const location = useLocation()
   const user = useGetRole(id)
   const [loading, setLoading] = useState<boolean>(false)
 
 
   function edit() {
-    history.push(`/users/${id}/update`)
+    history.push(`/roles/${id}/update`)
   }
 
   async function remove() {
     setLoading(true)
     try {
-      const { data } = await api.roles.remove(id)
-      mutate(location.pathname, { ...data })
+      await api.roles.remove(id)
+      history.push(`/roles`)
     } catch (err) { }
     setLoading(false)
   }

@@ -1,42 +1,45 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
 import api from '~/api'
 import { errorFields } from '~/helpers/showErrorFields'
-import { useGetUser } from '~/hooks/useGetUser'
 import { useHistory } from 'react-router-dom'
+import { useGetRole } from '~/hooks/useGetRole'
 
-interface UserCreateProps {
+interface UpdateRoleFormProps {
   id: string
 }
 
-const _UserUpdate: FC<UserCreateProps> = ({ id }) => {
+const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
   const [FormInstance] = Form.useForm()
+  const [loading, setLoading] = useState<boolean>(false)
   const history = useHistory()
-  const user = useGetUser(id)
+  const user = useGetRole(id)
 
   useEffect(function () {
     if (!user.data) return
-    const { name, email } = user.data
-    FormInstance.setFieldsValue({ name, email })
+    const { name } = user.data
+    FormInstance.setFieldsValue({ name })
   }, [user])
 
   async function submit(value: any) {
+    setLoading(true)
     try {
-      const { data } = await api.users.update(id, value)
-      history.push(`/users/${data.id}`)
+      const { data } = await api.roles.update(id, value)
+      history.push(`/roles/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)
     }
+    setLoading(false)
   }
 
   return (
     <User>
-      <Spin spinning={false}>
-        <Title level={3}>Редактирование пользователя</Title>
+      <Spin spinning={user.loading || loading}>
+        <Title level={3}>Редактирование роли</Title>
         <Form
-          name="userUpdate"
+          name="UpdateRoleForm"
           form={FormInstance}
           onFinish={submit}
           className={form}
@@ -47,13 +50,7 @@ const _UserUpdate: FC<UserCreateProps> = ({ id }) => {
           >
             <Input placeholder="Имя" />
           </Form.Item>
-          <Form.Item
-            name="email"
-            rules={[{ required: true, message: 'Введите email' }]}
-          >
-            <Input placeholder="Email" />
-          </Form.Item>
-
+          
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Сохранить
@@ -73,4 +70,4 @@ const form = css`
     max-width: 300px;
   }
 `
-export { _UserUpdate as UserUpdate }
+export { _UpdateRoleForm as UpdateRoleForm }
