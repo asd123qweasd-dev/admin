@@ -1,15 +1,14 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { useHistory, useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Select, Spin, Tag } from 'antd'
+import { Button, Descriptions, Spin  } from 'antd'
 import dayjs from 'dayjs'
 import api from '~/api'
 import { mutate } from 'swr'
 import { useGetUser } from '~/hooks/useGetUser'
-import { useGetRole } from '~/hooks/useGetRole'
+import { UserRolesUpdate } from '~/components/forms/userRolesUpdate'
 
 interface GetOneProps { }
-const { Option } = Select;
 
 const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
@@ -17,10 +16,7 @@ const _GetOne: FC<GetOneProps> = () => {
   const location = useLocation()
   const user = useGetUser(id)
   const [loading, setLoading] = useState<boolean>(false)
-  const roles = useGetRole()
 
-  console.log(roles);
-  
   function edit() {
     history.push(`/users/${id}/update`)
   }
@@ -42,13 +38,9 @@ const _GetOne: FC<GetOneProps> = () => {
     } catch (err) { }
     setLoading(false)
   }
-  
+
   function formatDate(value: string | null | undefined) {
     return value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
-  }
-
-  function changeRoles (values: any) {
-    console.log(values);
   }
 
   return (
@@ -66,13 +58,7 @@ const _GetOne: FC<GetOneProps> = () => {
           <Descriptions.Item label="Имя">{user.data?.name}</Descriptions.Item>
           <Descriptions.Item label="Email">{user.data?.email}</Descriptions.Item>
           <Descriptions.Item label="Роли">
-            { user.data?.roles &&
-              <Select mode="tags" style={{ width: '100%' }} defaultValue={user.data?.roles.map(item => (item.id))} placeholder="Роли" onChange={(changeRoles)}>
-                {roles?.data?.map(item => {
-                  return <Option value={item.id} key={item.id}>{item.name}</Option>
-                })}
-              </Select>
-            }
+            <UserRolesUpdate userId={id}/>
           </Descriptions.Item>
           <Descriptions.Item label="Подтвержден">{formatDate(user.data?.email_verified_at)}</Descriptions.Item>
           <Descriptions.Item label="Создан">{formatDate(user.data?.created_at)}</Descriptions.Item>
@@ -85,6 +71,7 @@ const _GetOne: FC<GetOneProps> = () => {
             : <Button danger onClick={remove}>Удалить</Button>
           }
         </Footer>
+
       </Spin>
     </GetOne>
   )
