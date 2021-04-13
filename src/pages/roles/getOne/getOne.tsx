@@ -39,7 +39,9 @@ const _GetOne: FC<GetOneProps> = () => {
           extra={<Button type="primary" onClick={edit}>Редактировать</Button>}
         >
           <Descriptions.Item label="id">{id}</Descriptions.Item>
-          <Descriptions.Item label="Имя"><Tag color="orange" style={{fontSize: '14px'}}>{ user.data?.name }</Tag></Descriptions.Item>
+          <Descriptions.Item label="Имя">
+            <Tag color="orange" >{ user.data?.name }</Tag>
+          </Descriptions.Item>
           <Descriptions.Item label="Права">
             <RolePermissionsUpdate roleId={id}/>
           </Descriptions.Item>

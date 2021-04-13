@@ -54,6 +54,7 @@ const styles = css`
     font-family: 'Inter', sans-serif;
     /* overflow-x: hidden; */
   }
+
   
   ${scroll}
   ${svgSprite}

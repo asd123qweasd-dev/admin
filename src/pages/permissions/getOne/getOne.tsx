@@ -39,7 +39,9 @@ const _GetOne: FC<GetOneProps> = () => {
           extra={<Button type="primary" onClick={edit}>Редактировать</Button>}
         >
           <Descriptions.Item label="id">{id}</Descriptions.Item>
-          <Descriptions.Item label="Право">{permission.data?.name}</Descriptions.Item>
+          <Descriptions.Item label="Право">
+            <Tag color="processing">{permission.data?.name}</Tag>
+          </Descriptions.Item>
           <Descriptions.Item label="Роли">
             {permission.data?.roles?.map(item => {
               return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>

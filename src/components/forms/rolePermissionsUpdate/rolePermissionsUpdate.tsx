@@ -48,7 +48,7 @@ const _RolePermissionsUpdate: FC<RolePermissionsUpdateProps> = ({roleId}) => {
                 </Select>
               : <div>
                   {role.data?.permissions?.map(item => {
-                    return <Tag color="blue" key={item.id} style={{marginBottom: '5px', fontSize: '14px'}}>{ item.name }</Tag>
+                    return <Tag color="blue" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
                   })}
                 </div>
             }

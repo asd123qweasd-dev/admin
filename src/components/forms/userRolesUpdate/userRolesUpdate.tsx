@@ -47,7 +47,7 @@ const _UserRolesUpdate: FC<UserRolesUpdateProps> = ({userId}) => {
                 </Select>
               : <div>
                   {user.data?.roles?.map(item => {
-                    return <Tag color="orange" key={item.id} style={{marginBottom: '5px', fontSize: '14px'}}>{ item.name }</Tag>
+                    return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
                   })}
                 </div>
             }
