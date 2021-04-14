@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import api from '~/api'
 import { TokenResponse } from '~/api/auth'
-import { AppThunk } from '../index'
+import { AppThunk } from './index'
 import { getSession, updateSession } from '~/helpers/session'
 import { notification } from 'antd'
 import { User } from '~/api/users'
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    changeSession: (state, action: PayloadAction<Maybe<TokenResponse>>) => {
+    setSession: (state, action: PayloadAction<Maybe<TokenResponse>>) => {
       state.session = action.payload
       updateSession(action.payload)
     },
@@ -35,7 +35,7 @@ export const authSlice = createSlice({
   }
 })
 
-export const { changeLoader, changeSession, changeMe } = authSlice.actions
+export const { changeLoader, setSession, changeMe } = authSlice.actions
 
 export const logout = (): AppThunk => async (dispatch, getState) => {
   dispatch(changeLoader(true))
@@ -47,7 +47,7 @@ export const logout = (): AppThunk => async (dispatch, getState) => {
       description: err.message
     })
   }
-  dispatch(changeSession(null))
+  dispatch(setSession(null))
   dispatch(changeLoader(false))
 }
 
@@ -57,7 +57,7 @@ export const getMe = (): AppThunk => async (dispatch, getState) => {
     const { data } = await api.auth.me()
     dispatch(changeMe(data))
   } catch (err) {
-    dispatch(changeSession(null))
+    dispatch(setSession(null))
     notification.error({
       message: 'Ошибка',
       description: err.message

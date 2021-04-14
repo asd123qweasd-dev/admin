@@ -1,31 +1,46 @@
-import React, { FC } from 'react'
-import { Input, Form, Button, Spin } from 'antd'
+import React, { FC, useState } from 'react'
+import { Input, Form, Button, Spin, notification } from 'antd'
 import { css } from '@emotion/css'
-import { LoginFormData } from '~/store/loginForm/slice'
-import { useRestoreForm } from '~/store/restoreForm'
 import { UserOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 import { FormVisibleType } from '~/components/authForm'
+import { errorFields } from '~/helpers'
+import { api } from '~/api'
+
+type RestoreFormModel = {
+  email: string
+  remember?: boolean
+}
 
 type RestoreFormProps = {
   changeForm: (type: FormVisibleType) => void
 }
 
 export const RestoreForm: FC<RestoreFormProps> = ({changeForm}) => {
-  const restoreForm = useRestoreForm()
-  const [FormInstance] = Form.useForm<LoginFormData>()
+  const [FormInstance] = Form.useForm()
+  const [loading, setLoading] = useState<boolean>(false)
+  
+  async function submit (values:RestoreFormModel) {
+    setLoading(true)
+    const { email } = values
+    try {
+      const { data } = await api.auth.password.email({ email })
+      notification.success({
+        message: data.status
+      })
+    } catch (err) {
+      errorFields(err, FormInstance)
+    }
+    setLoading(false)
+  }
 
   return (
     <Wrap>
-      <Spin spinning={restoreForm.loading}>
+      <Spin spinning={loading}>
         <Form
           name="restore"
-          fields={restoreForm.form}
           form={FormInstance}
-          onFinish={restoreForm.submit}
-          onFieldsChange={(changedFields, allFields) => {
-            restoreForm.changeForm(allFields)
-          }}
+          onFinish={submit}
           className={form}
         >
           <Form.Item

@@ -3,7 +3,7 @@ import { AuthorizedRouters } from '~/routes'
 import { BrowserRouter } from 'react-router-dom'
 import { Layout, Spin } from 'antd'
 import {Trigger} from './trigger'
-import { useAuth } from '~/store/auth'
+import { useAuth } from '~/hooks/useAuth'
 import { User } from './user/'
 import { Logo } from './logo'
 import { Navigation } from './navigation'
@@ -11,12 +11,7 @@ import styled from '@emotion/styled'
 
 export const Main: FunctionComponent = () => {
   const [menuRolled, setMenuRolled] = useState<boolean>(false)
-  const { getMe, loading } = useAuth()
-
-  useEffect(function () {
-    getMe()
-  }, [])
-
+  const { loading } = useAuth()
 
   return (
     <BrowserRouter>

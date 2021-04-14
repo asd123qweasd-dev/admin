@@ -1,6 +1,7 @@
 import { shallowEqual } from "react-redux"
+import { TokenResponse } from "~/api/auth"
 import { RootState, useAppDispatch, useAppSelector } from "~/store"
-import { logout, getMe } from "./slice"
+import { logout, getMe, setSession } from "~/store/auth"
 
 const authState = (state: RootState) => ({ ...state.auth })
 
@@ -13,11 +14,8 @@ export function useAuth() {
     get isAuth() {
       return Boolean(auth.session)
     },
-    logout() {
-      dispatch(logout())
-    },
-    getMe() {
-      dispatch(getMe())
-    }
+    logout: () => dispatch(logout()),
+    setSession: (session: Maybe<TokenResponse>) => dispatch(setSession(session)),
+    getMe: () => dispatch(getMe())
   }
 }

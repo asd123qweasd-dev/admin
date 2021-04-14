@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Auth } from '~/layouts/auth'
 import { Main } from '~/layouts/main'
-import { useAuth } from '~/store/auth'
+import { useAuth } from '~/hooks/useAuth'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 interface LayoutsProps { }

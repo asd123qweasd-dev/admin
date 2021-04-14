@@ -2,13 +2,15 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Avatar, Button, Dropdown, Menu } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
-import { useAuth } from '~/store/auth'
+import { useAuth } from '~/hooks/useAuth'
 import UserImage from '~/assets/user.png'
+import {useGetMe} from '~/hooks/useGetMe'
 
 interface UserProps { }
 
 const _User: FC<UserProps> = () => {
-  const { logout, user } = useAuth()
+  const { logout } = useAuth()
+  const { data:user } = useGetMe()
 
   function UserDropDownMenu() {
     return (
