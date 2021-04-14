@@ -26,10 +26,10 @@ export const AuthorizedRouters:FunctionComponent = ()=> {
       <Route exact path="/permissions/:id" component={ Permissions.GetOne } />
       <Route exact path="/permissions/:id/update" component={ Permissions.Update } />
 
-      <Route exact path="/category" component={ Category.GetAll } />
-      <Route exact path="/category/create" component={ Category.Create } />
-      <Route exact path="/category/:id" component={ Category.GetOne } />
-      <Route exact path="/category/:id/update" component={ Category.Update } />
+      <Route exact path="/categories" component={ Category.GetAll } />
+      <Route exact path="/categories/create" component={ Category.Create } />
+      <Route exact path="/categories/:id" component={ Category.GetOne } />
+      <Route exact path="/categories/:id/update" component={ Category.Update } />
     </Switch>
   )
 }

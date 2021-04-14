@@ -4,8 +4,10 @@ import { create } from './create'
 import { update } from './update'
 import { remove } from './remove'
 import { status } from './status'
+import { restore } from './restore'
 
 export type Category = {
+  id: string
   parent_id: Maybe<number>
   slug: Maybe<string>
   name: Maybe<string>
@@ -18,11 +20,14 @@ export type Category = {
   deleted_at: Maybe<string>
 }
 
-export const roles = {
+export type CategoryInput = Pick<Category, 'slug'|'name'|'title'|'keywords'|'description'>
+
+export const category = {
   getAll,
   getOne,
   create,
   update,
   remove,
   status,
+  restore
 }

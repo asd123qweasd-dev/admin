@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
-import dayjs from 'dayjs'
 import { NavLink } from 'react-router-dom'
 import { formatDate } from '~/helpers/formatDate'
 
@@ -18,7 +17,7 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
       dataIndex: 'id',
       key: 'id',
       fixed: 'left',
-      render: (value) => <NavLink to={`/category/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink>
+      render: (value) => <NavLink to={`/categories/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink>
     },
     {
       title: 'Имя',
@@ -26,7 +25,7 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
       key: 'name'
     },
     {
-      title: 'Активна',
+      title: 'Статус',
       dataIndex: 'is_active',
       key: 'is_active',
       render: (value) => <Tag color={value ? 'success' : 'error'}>{ value ? 'Активна' : 'Неактивная' }</Tag>
@@ -40,7 +39,7 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
       title: 'Parent Id',
       dataIndex: 'parent_id',
       key: 'parent_id',
-      render: (value) => value ? <NavLink to={`/category/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink> : 'нет'
+      render: (value) => value ? <NavLink to={`/categories/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink> : 'нет'
     },
     {
       title: '(SEO)Title',

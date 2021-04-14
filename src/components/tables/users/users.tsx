@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
-import dayjs from 'dayjs'
 import { NavLink } from 'react-router-dom'
+import { formatDate } from '~/helpers/formatDate'
 
 interface UsersProps {
   data: any[]|undefined
@@ -41,30 +41,25 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       title: 'Подтвержден',
       dataIndex: 'email_verified_at',
       key: 'email_verified_at',
-      render: (value) => value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
-    },
-    {
-      title: 'Изображение',
-      dataIndex: 'images',
-      key: 'images',
+      render: (value) => formatDate(value)
     },
     {
       title: 'Создан',
       dataIndex: 'created_at',
       key: 'created_at',
-      render: (value) => value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
+      render: (value) => formatDate(value)
     },
     {
       title: 'Обновлен',
       dataIndex: 'updated_at',
       key: 'updated_at',
-      render: (value) => value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
+      render: (value) => formatDate(value)
     },
     {
       title: 'Удален',
       dataIndex: 'deleted_at',
       key: 'deleted_at',
-      render: (value) => value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
+      render: (value) => formatDate(value)
     }
   ]
   return (

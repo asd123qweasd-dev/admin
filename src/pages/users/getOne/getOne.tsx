@@ -2,11 +2,11 @@ import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { useHistory, useLocation, useParams } from 'react-router'
 import { Button, Descriptions, Spin  } from 'antd'
-import dayjs from 'dayjs'
 import api from '~/api'
 import { mutate } from 'swr'
 import { useGetUser } from '~/hooks/useGetUser'
 import { UserRolesUpdate } from '~/components/forms/userRolesUpdate'
+import { formatDate } from '~/helpers/formatDate'
 
 interface GetOneProps { }
 
@@ -37,10 +37,6 @@ const _GetOne: FC<GetOneProps> = () => {
       mutate(location.pathname, { ...data })
     } catch (err) { }
     setLoading(false)
-  }
-
-  function formatDate(value: string | null | undefined) {
-    return value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
   }
 
   return (

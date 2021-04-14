@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { UpdateRoleForm } from '~/components/forms/roles/updateRoleForm'
+import { UpdateCategoryForm } from '~/components/forms/category/updateCategoryForm'
 import { useParams } from 'react-router'
 
 interface UpdateProps { }
@@ -10,7 +10,7 @@ const _Update: FC<UpdateProps> = () => {
 
   return (
     <Update>
-      <UpdateRoleForm id={id} />
+      <UpdateCategoryForm id={id} />
     </Update>
   )
 }

@@ -42,7 +42,7 @@ const _GetOne: FC<GetOneProps> = () => {
           <Descriptions.Item label="Право">
             <Tag color="processing">{permission.data?.name}</Tag>
           </Descriptions.Item>
-          <Descriptions.Item label="Роли">
+          <Descriptions.Item label="Используется в ролях">
             {permission.data?.roles?.map(item => {
               return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
             })}

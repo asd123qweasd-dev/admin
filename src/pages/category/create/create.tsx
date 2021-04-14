@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { CreateRoleForm } from '~/components/forms/roles/createRoleForm'
+import { CreateCategoryForm } from '~/components/forms/category/createCategoryForm'
 
 interface CreateProps { }
 
 const _Create: FC<CreateProps> = () => {
   return (
     <Create>
-      <CreateRoleForm />
+      <CreateCategoryForm />
     </Create>
   )
 }

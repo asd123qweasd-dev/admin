@@ -12,7 +12,7 @@ const _GetAll: FC<GetAllProps> = () => {
     <GetAll>
       <Header>
         <Title level={4}>Роли</Title>
-        <NavLink to={`/roles/create`}>
+        <NavLink to={`/categories/create`}>
           <Button type="primary">Создать</Button>
         </NavLink>
       </Header>
