@@ -1,11 +1,9 @@
 import useSWR from 'swr'
 import { User } from '~/api/users'
-import axios from '~/lib/axios'
-
-const fetcher = (url: string) => axios.get(url).then(res => res.data)
+import { defaultFetcher } from '~/lib/axios'
 
 export function useGetMe() {
-  const { data, error } = useSWR<User>('/auth/me', fetcher)
+  const { data, error } = useSWR<User>('/auth/me', defaultFetcher)
 
   return {
     data,

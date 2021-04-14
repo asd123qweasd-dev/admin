@@ -4,6 +4,7 @@ import { Home } from '~/pages/Home/Home'
 import { Users } from '~/pages/users'
 import { Roles } from '~/pages/roles'
 import { Permissions } from '~/pages/permissions'
+import { Category } from '~/pages/category'
 
 export const AuthorizedRouters:FunctionComponent = ()=> {
   return (
@@ -24,6 +25,11 @@ export const AuthorizedRouters:FunctionComponent = ()=> {
       <Route exact path="/permissions/create" component={ Permissions.Create } />
       <Route exact path="/permissions/:id" component={ Permissions.GetOne } />
       <Route exact path="/permissions/:id/update" component={ Permissions.Update } />
+
+      <Route exact path="/category" component={ Category.GetAll } />
+      <Route exact path="/category/create" component={ Category.Create } />
+      <Route exact path="/category/:id" component={ Category.GetOne } />
+      <Route exact path="/category/:id/update" component={ Category.Update } />
     </Switch>
   )
 }
