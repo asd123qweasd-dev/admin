@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Home } from '~/pages/Home/Home'
+import { Home } from '~/pages/home/home'
 import { Users } from '~/pages/users'
 import { Roles } from '~/pages/roles'
 import { Permissions } from '~/pages/permissions'

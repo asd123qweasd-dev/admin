@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
-import dayjs from 'dayjs'
 import { NavLink } from 'react-router-dom'
 
 interface RolesProps {

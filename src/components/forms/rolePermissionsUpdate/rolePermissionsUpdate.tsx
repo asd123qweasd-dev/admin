@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
-import { useGetUser } from '~/hooks/useGetUser'
 import { Button, Select, Spin, Tag } from 'antd'
 import { useGetRole } from '~/hooks/useGetRole'
 import { css } from '@emotion/css'
