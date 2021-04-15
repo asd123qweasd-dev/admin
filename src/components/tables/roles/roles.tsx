@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
-import dayjs from 'dayjs'
 import { NavLink } from 'react-router-dom'
 
 interface RolesProps {
@@ -20,16 +19,17 @@ const _Roles: FC<RolesProps> = ({data, title}) => {
       render: (value) => <NavLink to={`/roles/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink>
     },
     {
-      title: 'Имя',
+      title: 'Роль',
       dataIndex: 'name',
       key: 'name',
+      render: (value) => <Tag color="orange">{ value }</Tag>
     },
     {
       title: 'Права',
       dataIndex: 'permissions',
       key: 'permissions',
       render: (values) => values.map((item:any) => {
-        return <Tag color="blue" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
+        return <Tag color="processing" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
       })
     }
   

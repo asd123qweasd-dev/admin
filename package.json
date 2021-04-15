@@ -93,6 +93,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:docker": "docker build --build-arg APP_VERSION=local -t admin_dnr.dev .",
     "test": "node scripts/test.js",
     "create": "node create.js"
   },

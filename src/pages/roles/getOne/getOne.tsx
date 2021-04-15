@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router'
 import { Button, Descriptions, Spin, Tag } from 'antd'
 import api from '~/api'
 import { useGetRole } from '~/hooks/useGetRole'
-
+import { RolePermissionsUpdate } from '~/components/forms/rolePermissionsUpdate'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
@@ -39,11 +39,11 @@ const _GetOne: FC<GetOneProps> = () => {
           extra={<Button type="primary" onClick={edit}>Редактировать</Button>}
         >
           <Descriptions.Item label="id">{id}</Descriptions.Item>
-          <Descriptions.Item label="Имя">{user.data?.name}</Descriptions.Item>
+          <Descriptions.Item label="Имя">
+            <Tag color="orange" >{ user.data?.name }</Tag>
+          </Descriptions.Item>
           <Descriptions.Item label="Права">
-            {user.data?.permissions?.map(item => {
-              return <Tag color="blue" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
-            })}
+            <RolePermissionsUpdate roleId={id}/>
           </Descriptions.Item>
         </Descriptions>
         <Footer>

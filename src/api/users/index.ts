@@ -4,11 +4,13 @@ import { create } from './create'
 import { update } from './update'
 import { remove } from './remove'
 import { restore } from './restore'
+import { Role } from '../roles'
 
 export type User = {
   id: number
   name: Maybe<string>,
   email: Maybe<string>,
+  roles: Role[]
   email_verified_at: Maybe<string>,
   created_at: Maybe<string>,
   updated_at: Maybe<string>,

@@ -1,32 +1,51 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Input, Form, Button, Spin, Checkbox } from 'antd'
 import { css } from '@emotion/css'
-import { LoginFormData } from '~/store/loginForm/slice'
-import { useRegistrationForm } from '~/store/registrationForm'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 import { FormVisibleType } from '~/components/authForm'
+import { errorFields } from '~/helpers'
+import api from '~/api'
+import { useAuth } from '~/hooks/useAuth'
+
+type RegistratiFonFormModel = {
+  name: string
+  email: string
+  password: string
+  password_confirmation: string
+  remember?: boolean
+}
 
 type RegistrationProps = {
   changeForm: (type: FormVisibleType) => void
 }
 
 export const RegistrationForm: FC<RegistrationProps> = ({changeForm}) => {
-  const registrationForm = useRegistrationForm()
-  const [FormInstance] = Form.useForm<LoginFormData>()
+  const [FormInstance] = Form.useForm()
+  const {setSession} = useAuth()
+  const [loading, setLoading] = useState<boolean>(false)
+  
+  async function submit (values:RegistratiFonFormModel) {
+    setLoading(true)
+    const { name, email, password, password_confirmation, remember } = values
+    try {
+      const { data } = await api.auth.register({ name, email, password, password_confirmation })
+      data.remember = remember
+      setSession(data)
+    } catch (err) {
+      errorFields(err, FormInstance)
+    }
+    setLoading(false)
+  }
 
   return (
     <Wrap>
-      <Spin spinning={registrationForm.loading}>
+      <Spin spinning={loading}>
         <Form
           name="registration"
-          fields={registrationForm.form}
           form={FormInstance}
-          onFinish={registrationForm.submit}
-          onFieldsChange={(changedFields, allFields) => {
-            registrationForm.changeForm(allFields)
-          }}
           className={form}
+          onFinish={submit}
         >
           <Form.Item
             name="name"

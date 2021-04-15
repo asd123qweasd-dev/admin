@@ -6,6 +6,7 @@ import api from '~/api'
 import { errorFields } from '~/helpers/showErrorFields'
 import { useHistory } from 'react-router-dom'
 import { useGetRole } from '~/hooks/useGetRole'
+import { mutate } from 'swr'
 
 interface UpdateRoleFormProps {
   id: string
@@ -18,7 +19,7 @@ const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
   const user = useGetRole(id)
 
   useEffect(function () {
-    if (!user.data) return
+    if (!user.data  || loading) return
     const { name } = user.data
     FormInstance.setFieldsValue({ name })
   }, [user])
@@ -27,6 +28,7 @@ const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
     setLoading(true)
     try {
       const { data } = await api.roles.update(id, value)
+      mutate(`/roles/${id}`, {...user.data, ...data})
       history.push(`/roles/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)

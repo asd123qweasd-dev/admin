@@ -1,12 +1,13 @@
-import {hasRemember} from './hasRemember'
-import {updateSession, getSession} from './session'
-import {apiErrorHandler} from './apiErrorHandler'
-import {showErrorFields} from './showErrorFields'
+import { updateSession, getSession } from './session'
+import { apiErrorHandler } from './apiErrorHandler'
+import { showErrorFields, errorFields } from './showErrorFields'
+import { rules } from './rules'
 
 export {
-  hasRemember,
   updateSession,
   getSession,
   apiErrorHandler,
-  showErrorFields
+  showErrorFields,
+  errorFields,
+  rules
 }

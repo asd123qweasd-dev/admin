@@ -1,11 +1,12 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { useHistory, useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Spin } from 'antd'
-import dayjs from 'dayjs'
+import { Button, Descriptions, Spin  } from 'antd'
 import api from '~/api'
 import { mutate } from 'swr'
 import { useGetUser } from '~/hooks/useGetUser'
+import { UserRolesUpdate } from '~/components/forms/userRolesUpdate'
+import { formatDate } from '~/helpers/formatDate'
 
 interface GetOneProps { }
 
@@ -15,7 +16,6 @@ const _GetOne: FC<GetOneProps> = () => {
   const location = useLocation()
   const user = useGetUser(id)
   const [loading, setLoading] = useState<boolean>(false)
-
 
   function edit() {
     history.push(`/users/${id}/update`)
@@ -38,10 +38,6 @@ const _GetOne: FC<GetOneProps> = () => {
     } catch (err) { }
     setLoading(false)
   }
-  
-  function formatDate(value: string | null | undefined) {
-    return value ? dayjs(value).format('DD.MM.YYYY HH:mm') : ''
-  }
 
   return (
     <GetOne>
@@ -57,6 +53,9 @@ const _GetOne: FC<GetOneProps> = () => {
           <Descriptions.Item label="id">{id}</Descriptions.Item>
           <Descriptions.Item label="Имя">{user.data?.name}</Descriptions.Item>
           <Descriptions.Item label="Email">{user.data?.email}</Descriptions.Item>
+          <Descriptions.Item label="Роли">
+            <UserRolesUpdate userId={id}/>
+          </Descriptions.Item>
           <Descriptions.Item label="Подтвержден">{formatDate(user.data?.email_verified_at)}</Descriptions.Item>
           <Descriptions.Item label="Создан">{formatDate(user.data?.created_at)}</Descriptions.Item>
           <Descriptions.Item label="Обновлен">{formatDate(user.data?.updated_at)}</Descriptions.Item>
@@ -68,6 +67,7 @@ const _GetOne: FC<GetOneProps> = () => {
             : <Button danger onClick={remove}>Удалить</Button>
           }
         </Footer>
+
       </Spin>
     </GetOne>
   )

@@ -23,4 +23,10 @@ instance.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
+const defaultFetcher = (url: string) => instance.get(url).then(res => res.data)
+
 export default instance
+export {
+  instance as axios,
+  defaultFetcher
+}

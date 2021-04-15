@@ -1,31 +1,49 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Input, Form, Button, Spin, Checkbox } from 'antd'
 import { css } from '@emotion/css'
-import { LoginFormData } from '~/store/loginForm/slice'
-import { useLoginForm } from '~/store/loginForm'
+// import { useLoginForm } from '~/store/loginForm'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 import { FormVisibleType } from '~/components/authForm'
+import api from '~/api'
+import {useAuth} from '~/hooks/useAuth'
+import { errorFields } from '~/helpers'
+
+type LoginFormModel = {
+  email: string
+  password: string
+  remember?: boolean
+}
 
 type LoginFormProps = {
   changeForm: (type: FormVisibleType) => void
 }
 
 export const LoginForm: FC<LoginFormProps> = ({changeForm}) => {
-  const loginForm = useLoginForm()
-  const [FormInstance] = Form.useForm<LoginFormData>()
-
+  const [FormInstance] = Form.useForm<LoginFormModel>()
+  const {setSession} = useAuth()
+  const [loading, setLoading] = useState<boolean>(false)
+  
+  async function submit (values:LoginFormModel) {
+    setLoading(true)
+    const { email, password, remember } = values
+    try {
+      const { data } = await api.auth.login({ email, password })
+      data.remember = remember
+      setSession(data)
+    } catch (err) {
+      errorFields(err, FormInstance)
+    }
+    setLoading(false)
+  }
+  
   return (
     <Wrap>
-      <Spin spinning={loginForm.loading}>
+      <Spin spinning={loading}>
         <Form
           name="login"
-          fields={loginForm.form}
           form={FormInstance}
-          onFinish={loginForm.submit}
-          onFieldsChange={(changedFields, allFields) => {
-            loginForm.changeForm(allFields)
-          }}
+          onFinish={submit}
           className={form}
         >
           <Form.Item

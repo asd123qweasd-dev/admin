@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { AuthorizedRouters } from '~/routes'
 import { BrowserRouter } from 'react-router-dom'
 import { Layout, Spin } from 'antd'
 import {Trigger} from './trigger'
-import { useAuth } from '~/store/auth'
+import { useAuth } from '~/hooks/useAuth'
 import { User } from './user/'
 import { Logo } from './logo'
 import { Navigation } from './navigation'
@@ -11,13 +11,12 @@ import styled from '@emotion/styled'
 
 export const Main: FunctionComponent = () => {
   const [menuRolled, setMenuRolled] = useState<boolean>(false)
-  const { getMe, loading } = useAuth()
+  const { loading } = useAuth()
 
-  useEffect(function () {
-    getMe()
-  }, [])
-
-
+  function getVersion() {
+    return process.env.NODE_ENV !== 'production' ? 'dev' : process.env.APP_VERSION
+  }
+  
   return (
     <BrowserRouter>
       <Spin spinning={loading}>
@@ -25,6 +24,7 @@ export const Main: FunctionComponent = () => {
           <Sider trigger={null} collapsible collapsed={menuRolled}>
             <Logo menuRolled={menuRolled} />
             <Navigation />
+            <Version>{getVersion()}</Version>
           </Sider>
           <Layout className="wrap">
             <Header>
@@ -69,4 +69,11 @@ const Content = styled(Layout.Content)`
   padding: 24px;
   min-height: 280px;
   /* height: calc(100vh - 64px); */
+`
+const Version = styled.div`
+  color: #fff;
+  font-size: 12px;
+  position: absolute;
+  bottom: 12px;
+  left: calc(50% - 16px);
 `
