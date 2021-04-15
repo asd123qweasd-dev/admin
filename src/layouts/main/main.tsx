@@ -24,7 +24,7 @@ export const Main: FunctionComponent = () => {
           <Sider trigger={null} collapsible collapsed={menuRolled}>
             <Logo menuRolled={menuRolled} />
             <Navigation />
-            <Version>{getVersion()}</Version>
+            <Version>release: {getVersion()}</Version>
           </Sider>
           <Layout className="wrap">
             <Header>
@@ -73,7 +73,8 @@ const Content = styled(Layout.Content)`
 const Version = styled.div`
   color: #fff;
   font-size: 12px;
-  position: absolute;
-  bottom: 12px;
-  left: calc(50% - 16px);
+  width: 100%;
+  padding-left: 24px;
+  opacity: .6;
+  margin-top: 50px;
 `

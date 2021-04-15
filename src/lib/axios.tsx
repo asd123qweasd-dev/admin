@@ -4,7 +4,7 @@ import {apiErrorHandler} from '~/helpers/apiErrorHandler'
 
 
 const instance = axios.create({
-  baseURL: 'http://31.133.50.50:8080/api'
+  baseURL: '/api'
 })
 
 instance.interceptors.request.use(function (config) {

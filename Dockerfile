@@ -11,7 +11,6 @@ COPY config ./config
 COPY .babelrc package.json package-lock.json tsconfig.json ./
 RUN npm install
 RUN npm run build
-RUN npm prune --production
 
 
 # App
