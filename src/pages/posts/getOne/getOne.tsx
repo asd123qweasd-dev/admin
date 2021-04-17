@@ -11,20 +11,22 @@ import { InputEditable } from '~/components/inputEditable'
 import { useGetUsers } from '~/hooks/useGetUsers'
 import { NavLink } from 'react-router-dom'
 import { useGetCategory } from '~/hooks/useGetCategory'
+import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
   const location = useLocation()
-  const [FormInstance] = Form.useForm()
   const post = useGetPosts(id)
   const user = useGetUsers(post.data?.author_id || null)
   const category = useGetCategory(post.data?.category_id || null)
   const [loading, setLoading] = useState<boolean>(false)
+  const [FormInstance] = Form.useForm()
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   useEffect(function () {
-    if (!post.data || loading) return
+    const fieldsError = FormInstance.getFieldsError()
+    if (!post.data || loading || fieldsError.length) return
     FormInstance.setFieldsValue(post.data)
   }, [post])
 
@@ -60,31 +62,24 @@ const _GetOne: FC<GetOneProps> = () => {
     try {
       const { data } = await api.posts.update(id, value)
       mutate(`/posts/${id}`, { ...post.data, ...data })
+      setIsEdit(false)
     } catch (err) {
       errorFields(err, FormInstance)
     }
-    setIsEdit(false)
     setLoading(false)
-  }
-
-  const setting = {
-    column: 1,
-    bordered: true,
-    labelStyle: { width: '200px' },
-    style: { margin: '25px 0' }
   }
 
   const { Item } = Descriptions
   return (
     <GetOne>
-      <Spin spinning={post.loading || loading}>
+      <Spin spinning={post.loading || category.loading || user.loading || loading}>
         <Form name="UpdatePost" form={FormInstance} onFinish={submit}>
           <Header>
             { !isEdit && <Button type="primary" onClick={() => setIsEdit(true)}>Редактировать</Button> }
             { isEdit && <Button type="primary" htmlType="submit">Сохранить</Button> }
             { isEdit && <Button type="primary" danger style={{marginLeft: '10px'}} onClick={() => setIsEdit(false)}>Отмена</Button> }
           </Header>
-          <Descriptions title="Пост" {...setting}>
+          <Descriptions title="Пост" {...descriptionDefaultSettings}>
             <Item label="id">{id}</Item>
             <Item label="Имя">
               <InputEditable edit={isEdit} name="name" value={post.data?.name} title="Имя" />
@@ -109,7 +104,7 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
           </Descriptions>
 
-          <Descriptions title="SEO" {...setting}>
+          <Descriptions title="SEO" {...descriptionDefaultSettings}>
             <Item label="title">
               <InputEditable edit={isEdit} name="title" value={post.data?.title} title="title" />
             </Item>
@@ -121,7 +116,7 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
           </Descriptions>
 
-          <Descriptions title="Meta" {...setting}>
+          <Descriptions title="Meta" {...descriptionDefaultSettings}>
             <Item label="Создано">
               {formatDate(post.data?.created_at)}
             </Item>

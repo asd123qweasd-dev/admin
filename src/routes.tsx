@@ -15,7 +15,6 @@ export const AuthorizedRouters:FunctionComponent = ()=> {
       <Route exact path="/users" component={ Users.GetAll } />
       <Route exact path="/users/create" component={ Users.Create } />
       <Route exact path="/users/:id" component={ Users.GetOne } />
-      <Route exact path="/users/:id/update" component={ Users.Update } />
 
       <Route exact path="/roles" component={ Roles.GetAll } />
       <Route exact path="/roles/create" component={ Roles.Create } />
