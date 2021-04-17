@@ -80,7 +80,7 @@ const _GetOne: FC<GetOneProps> = () => {
               {category.data?.slug}
             </Item>
             <Item label="Parent id">
-              { Boolean(category.data?.parent_id) && <NavLink to={`/users/${category.data?.parent_id}`}>{category.data?.name}</NavLink>}
+              { Boolean(category.data?.parent_id) && <NavLink to={`/categories/${category.data?.parent_id}`}>{category.data?.name}</NavLink>}
             </Item>
           </Descriptions>
 

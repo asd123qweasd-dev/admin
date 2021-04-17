@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { Table, Tag, Typography } from 'antd'
+import { Table, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { NavLink } from 'react-router-dom'
-import { formatDate } from '~/helpers/formatDate'
 import { CategoryStatus } from '~/components/categoryStatus'
 
 interface CategoryProps {
