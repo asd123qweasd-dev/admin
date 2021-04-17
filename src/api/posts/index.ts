@@ -20,6 +20,7 @@ export type Post = {
   source_url: Maybe<string>
   published_at: Maybe<string>
   updated_at: Maybe<string>
+  created_at: Maybe<string>
   deleted_at: Maybe<string>
   // image: Maybe<string>
 }

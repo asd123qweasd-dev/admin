@@ -24,7 +24,14 @@ const _PostsTable: FC<PostsTableProps> = ({data, title}) => {
       title: 'Статус',
       dataIndex: 'published_at',
       key: 'published_at',
-      render: (value) => <Tag color={value ? 'success' : 'error'}>{ value ? 'Активен' : 'Неактивен' }</Tag>
+      render: (value, row) => {
+        return (<>
+          { row.deleted_at 
+            ? <Tag color={value ? 'success' : 'orange'}>{ value ? 'Опубликован' : 'Неопубликован' }</Tag>
+            : <Tag color="error">Удален</Tag>
+          }
+        </>)
+      }
     },
     {
       title: 'Имя',
@@ -42,12 +49,12 @@ const _PostsTable: FC<PostsTableProps> = ({data, title}) => {
       key: 'source_url',
       render: (value) => value ? <a href={value} target="_blank" rel="noreferrer">{value}</a> : 'нет'
     },
-    {
-      title: 'Удалено',
-      dataIndex: 'deleted_at',
-      key: 'deleted_at',
-      render: (value) => formatDate(value)
-    }
+    // {
+    //   title: 'Удалено',
+    //   dataIndex: 'deleted_at',
+    //   key: 'deleted_at',
+    //   render: (value) => formatDate(value)
+    // }
   
   ]
   return (
