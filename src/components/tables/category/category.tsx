@@ -4,6 +4,7 @@ import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { NavLink } from 'react-router-dom'
 import { formatDate } from '~/helpers/formatDate'
+import { CategoryStatus } from '~/components/categoryStatus'
 
 interface CategoryProps {
   data: any[]|undefined
@@ -28,12 +29,7 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
       title: 'Статус',
       dataIndex: 'is_active',
       key: 'is_active',
-      render: (value) => <Tag color={value ? 'success' : 'error'}>{ value ? 'Активна' : 'Неактивная' }</Tag>
-    },
-    {
-      title: 'Slug',
-      dataIndex: 'slug',
-      key: 'slug'
+      render: (value, row) => <CategoryStatus id={Number(row.id)} />
     },
     {
       title: 'Parent Id',
@@ -41,13 +37,6 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
       key: 'parent_id',
       render: (value) => value ? <NavLink to={`/categories/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink> : 'нет'
     },
-    {
-      title: 'Удалено',
-      dataIndex: 'deleted_at',
-      key: 'deleted_at',
-      render: (value) => formatDate(value)
-    }
-  
   ]
   return (
     <Category>

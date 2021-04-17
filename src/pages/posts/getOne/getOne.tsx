@@ -94,7 +94,7 @@ const _GetOne: FC<GetOneProps> = () => {
               }
             </Item>
             <Item label="Slug">
-              <InputEditable edit={isEdit} name="slug" value={post.data?.slug} title="Slug" />
+              {post.data?.slug}
             </Item>
             <Item label="Автор">
               { post.data?.author_id && <NavLink to={`/users/${post.data?.author_id}`}>{user.data?.name}</NavLink>}
