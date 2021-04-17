@@ -12,7 +12,7 @@ const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
   const location = useLocation()
   const history = useHistory()
-  const category = useGetCategory(id)
+  const category = useGetCategory(Number(id))
   const [loading, setLoading] = useState<boolean>(false)
 
   function edit() {

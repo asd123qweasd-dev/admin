@@ -1,37 +1,32 @@
 import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { useHistory, useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Form, Input, Spin, Tag } from 'antd'
+import { useLocation, useParams } from 'react-router'
+import { Button, Descriptions, Form, Spin, Tag } from 'antd'
 import api from '~/api'
 import { formatDate } from '~/helpers/formatDate'
 import { mutate } from 'swr'
 import { useGetPosts } from '~/hooks/useGetPosts'
-import { errorFields, rules } from '~/helpers'
+import { errorFields } from '~/helpers'
 import { InputEditable } from '~/components/inputEditable'
+import { useGetUsers } from '~/hooks/useGetUsers'
+import { NavLink } from 'react-router-dom'
+import { useGetCategory } from '~/hooks/useGetCategory'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
   const location = useLocation()
-  const history = useHistory()
   const [FormInstance] = Form.useForm()
   const post = useGetPosts(id)
+  const user = useGetUsers(post.data?.author_id || null)
+  const category = useGetCategory(post.data?.category_id || null)
   const [loading, setLoading] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   useEffect(function () {
     if (!post.data || loading) return
-    // const { slug, name, title, description, keywords } = post.data
     FormInstance.setFieldsValue(post.data)
   }, [post])
-
-  function edit() {
-    if (isEdit) {
-      FormInstance.submit()
-    } else {
-      setIsEdit(true)
-    }
-  }
 
   async function remove() {
     setLoading(true)
@@ -95,11 +90,22 @@ const _GetOne: FC<GetOneProps> = () => {
               <InputEditable edit={isEdit} name="name" value={post.data?.name} title="Имя" />
             </Item>
             <Item label="Статус">
-              <Tag color={post.data?.published_at ? 'success' : 'error'}>{post.data?.published_at ? 'Опубликован' : 'Неопубликован'}</Tag>
-              <Button type="link" onClick={changeStatus}>Сменить</Button>
+              { post.data?.deleted_at 
+                ? <Tag color="error">Удален</Tag>
+                : <>
+                    <Tag color={post.data?.published_at ? 'success' : 'orange'}>{ post.data?.published_at ? 'Опубликован' : 'Неопубликован' }</Tag>
+                    <Button type="link" onClick={changeStatus}>Сменить</Button>
+                  </>
+              }
             </Item>
             <Item label="Slug">
               <InputEditable edit={isEdit} name="slug" value={post.data?.slug} title="Slug" />
+            </Item>
+            <Item label="Автор">
+              { post.data?.author_id && <NavLink to={`/users/${post.data?.author_id}`}>{user.data?.name}</NavLink>}
+            </Item>
+            <Item label="Категория">
+              { post.data?.category_id && <NavLink to={`/users/${post.data?.category_id}`}>{category.data?.name}</NavLink>}
             </Item>
           </Descriptions>
 

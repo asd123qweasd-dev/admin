@@ -5,11 +5,15 @@ import { update } from './update'
 import { remove } from './remove'
 import { publish } from './publish'
 import { restore } from './restore'
+import { User } from '~/api/users'
+import { Category } from '~/api/category'
 
 export type Post = {
   id: string
+  author: User
+  author_id: Maybe<number>
+  category: Category
   category_id: Maybe<number>
-  author_id: Maybe<string>
   slug: Maybe<string>
   name: Maybe<string>
   intro: Maybe<string>

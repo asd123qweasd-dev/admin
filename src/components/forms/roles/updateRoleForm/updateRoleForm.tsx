@@ -16,19 +16,19 @@ const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
   const [FormInstance] = Form.useForm()
   const [loading, setLoading] = useState<boolean>(false)
   const history = useHistory()
-  const user = useGetRole(id)
+  const role = useGetRole(id)
 
   useEffect(function () {
-    if (!user.data  || loading) return
-    const { name } = user.data
+    if (!role.data  || loading) return
+    const { name } = role.data
     FormInstance.setFieldsValue({ name })
-  }, [user])
+  }, [role])
 
   async function submit(value: any) {
     setLoading(true)
     try {
       const { data } = await api.roles.update(id, value)
-      mutate(`/roles/${id}`, {...user.data, ...data})
+      mutate(`/roles/${id}`, {...role.data, ...data})
       history.push(`/roles/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)
@@ -38,7 +38,7 @@ const _UpdateRoleForm: FC<UpdateRoleFormProps> = ({ id }) => {
 
   return (
     <User>
-      <Spin spinning={user.loading || loading}>
+      <Spin spinning={role.loading || loading}>
         <Title level={3}>Редактирование роли</Title>
         <Form
           name="UpdateRoleForm"

@@ -4,7 +4,7 @@ import { Button, Form, Input, Spin, Typography } from 'antd'
 import { css } from '@emotion/css'
 import api from '~/api'
 import { errorFields } from '~/helpers/showErrorFields'
-import { useGetUser } from '~/hooks/useGetUser'
+import { useGetUsers } from '~/hooks/useGetUsers'
 import { useHistory } from 'react-router-dom'
 
 interface UserCreateProps {
@@ -14,7 +14,7 @@ interface UserCreateProps {
 const _UserUpdate: FC<UserCreateProps> = ({ id }) => {
   const [FormInstance] = Form.useForm()
   const history = useHistory()
-  const user = useGetUser(id)
+  const user = useGetUsers(Number(id))
 
   useEffect(function () {
     if (!user.data) return

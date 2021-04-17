@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { ApartmentOutlined, ApiOutlined, AppstoreAddOutlined, DashboardOutlined, UserOutlined } from '@ant-design/icons'
+import { ApartmentOutlined, ApiOutlined, AppstoreAddOutlined, DashboardOutlined, FileDoneOutlined, UserOutlined } from '@ant-design/icons'
 import { NavLink } from 'react-router-dom'
 import { Menu } from 'antd'
 
@@ -20,7 +20,7 @@ const _Navigation: FC<NavigationProps> = () => {
       <Menu.Item key="/" icon={<DashboardOutlined />}>
         <NavLink to="/">Главная</NavLink>
       </Menu.Item>
-      <Menu.Item key="/posts" icon={<AppstoreAddOutlined />}>
+      <Menu.Item key="/posts" icon={<FileDoneOutlined />}>
         <NavLink to="/posts">Посты</NavLink>
       </Menu.Item>
       <Menu.Item key="/users" icon={<UserOutlined />}>

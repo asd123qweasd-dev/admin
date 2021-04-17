@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { NavLink } from 'react-router-dom'
-import { formatDate } from '~/helpers/formatDate'
 import { Post } from '~/api/posts'
 
 interface PostsTableProps {
@@ -27,28 +26,30 @@ const _PostsTable: FC<PostsTableProps> = ({data, title}) => {
       render: (value, row) => {
         return (<>
           { row.deleted_at 
-            ? <Tag color={value ? 'success' : 'orange'}>{ value ? 'Опубликован' : 'Неопубликован' }</Tag>
-            : <Tag color="error">Удален</Tag>
+            ? <Tag color="error">Удален</Tag>
+            : <Tag color={value ? 'success' : 'orange'}>{ value ? 'Опубликован' : 'Неопубликован' }</Tag>
           }
         </>)
       }
     },
     {
+      title: 'Автор',
+      dataIndex: 'author_id',
+      key: 'author_id',
+      render: (authorId, row) => authorId && <NavLink to={`/users/${authorId}`}>{row.author?.name}</NavLink>
+    },
+    {
+      title: 'Категория',
+      dataIndex: 'category_id',
+      key: 'category_id',
+      // render: (value) => value ? <a href={value} target="_blank" rel="noreferrer">{value}</a> : 'нет'
+      render: (categoryId, row) => categoryId && <NavLink to={`/categories/${categoryId}`}>{row.category?.name}</NavLink>
+    },
+    {
       title: 'Имя',
       dataIndex: 'name',
       key: 'name'
-    },
-    {
-      title: 'Slug',
-      dataIndex: 'slug',
-      key: 'slug'
-    },
-    {
-      title: 'source_url',
-      dataIndex: 'source_url',
-      key: 'source_url',
-      render: (value) => value ? <a href={value} target="_blank" rel="noreferrer">{value}</a> : 'нет'
-    },
+    }
     // {
     //   title: 'Удалено',
     //   dataIndex: 'deleted_at',

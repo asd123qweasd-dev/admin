@@ -28,7 +28,7 @@ const _UpdateCategoryForm: FC<UpdateCategoryFormProps> = ({ id }) => {
   const [FormInstance] = Form.useForm()
   const [loading, setLoading] = useState<boolean>(false)
   const history = useHistory()
-  const category = useGetCategory(id)
+  const category = useGetCategory(Number(id))
 
   useEffect(function () {
     if (!category.data || loading) return

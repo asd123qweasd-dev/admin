@@ -4,7 +4,7 @@ import { useHistory, useLocation, useParams } from 'react-router'
 import { Button, Descriptions, Spin  } from 'antd'
 import api from '~/api'
 import { mutate } from 'swr'
-import { useGetUser } from '~/hooks/useGetUser'
+import { useGetUsers } from '~/hooks/useGetUsers'
 import { UserRolesUpdate } from '~/components/forms/userRolesUpdate'
 import { formatDate } from '~/helpers/formatDate'
 
@@ -14,7 +14,7 @@ const _GetOne: FC<GetOneProps> = () => {
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
   const location = useLocation()
-  const user = useGetUser(id)
+  const user = useGetUsers(Number(id))
   const [loading, setLoading] = useState<boolean>(false)
 
   function edit() {

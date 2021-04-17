@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
-import { useGetUser } from '~/hooks/useGetUser'
+import { useGetUsers } from '~/hooks/useGetUsers'
 import { Button, Select, Spin, Tag } from 'antd'
 import { useGetRole } from '~/hooks/useGetRole'
 import { css } from '@emotion/css'
@@ -14,7 +14,7 @@ interface UserRolesUpdateProps {
 const _UserRolesUpdate: FC<UserRolesUpdateProps> = ({userId}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [editMode, setEditMode] = useState<boolean>(false)
-  const user = useGetUser(userId)
+  const user = useGetUsers(Number(userId))
   const roles = useGetRole()
 
   
