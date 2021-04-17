@@ -13,7 +13,7 @@ const _UserStatus: FC<UserStatusProps> = ({deleted, verified}) => {
       { deleted 
         ? <Tag color="error">Удален</Tag>
         : <>
-            <Tag color={verified ? 'success' : 'orange'}>{ verified ? 'Верифицирован' : 'Неверифицирован' }</Tag>
+            <Tag color={verified ? 'success' : 'orange'}>{ verified ? 'Подтвержден' : 'Неподтвержден' }</Tag>
             {/* <Button type="link" onClick={changeStatus}>Сменить</Button> */}
           </>
       }

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Form, Spin, Tag  } from 'antd'
+import { Button, Descriptions, Form, Spin  } from 'antd'
 import api from '~/api'
 import { mutate } from 'swr'
 import { useGetUsers } from '~/hooks/useGetUsers'

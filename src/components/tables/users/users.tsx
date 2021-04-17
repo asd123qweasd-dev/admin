@@ -4,6 +4,7 @@ import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { NavLink } from 'react-router-dom'
 import { formatDate } from '~/helpers/formatDate'
+import { UserStatus } from '~/components/userStatus'
 
 interface UsersProps {
   data: any[]|undefined
@@ -25,12 +26,10 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       key: 'name',
     },
     {
-      title: 'Роль',
-      dataIndex: 'roles',
-      key: 'roles',
-      render: (values) => values.map((item:any) => {
-        return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
-      })
+      title: 'Статус',
+      dataIndex: 'email_verified_at',
+      key: 'email_verified_at',
+      render: (value, row) => <UserStatus deleted={row.deleted_at} verified={row.email_verified_at}/>
     },
     {
       title: 'email',
@@ -38,16 +37,12 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       key: 'email',
     },
     {
-      title: 'Подтвержден',
-      dataIndex: 'email_verified_at',
-      key: 'email_verified_at',
-      render: (value) => formatDate(value)
-    },
-    {
-      title: 'Удален',
-      dataIndex: 'deleted_at',
-      key: 'deleted_at',
-      render: (value) => formatDate(value)
+      title: 'Роль',
+      dataIndex: 'roles',
+      key: 'roles',
+      render: (values) => values.map((item:any) => {
+        return <Tag color="orange" key={item.id} style={{marginBottom: '5px'}}>{ item.name }</Tag>
+      })
     }
   ]
   return (

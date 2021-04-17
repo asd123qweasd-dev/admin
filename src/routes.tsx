@@ -19,17 +19,14 @@ export const AuthorizedRouters:FunctionComponent = ()=> {
       <Route exact path="/roles" component={ Roles.GetAll } />
       <Route exact path="/roles/create" component={ Roles.Create } />
       <Route exact path="/roles/:id" component={ Roles.GetOne } />
-      <Route exact path="/roles/:id/update" component={ Roles.Update } />
 
       <Route exact path="/permissions" component={ Permissions.GetAll } />
       <Route exact path="/permissions/create" component={ Permissions.Create } />
       <Route exact path="/permissions/:id" component={ Permissions.GetOne } />
-      <Route exact path="/permissions/:id/update" component={ Permissions.Update } />
 
       <Route exact path="/categories" component={ Category.GetAll } />
       <Route exact path="/categories/create" component={ Category.Create } />
       <Route exact path="/categories/:id" component={ Category.GetOne } />
-      <Route exact path="/categories/:id/update" component={ Category.Update } />
 
       <Route exact path="/posts" component={ Posts.GetAll } />
       <Route exact path="/posts/create" component={ Posts.Create } />
