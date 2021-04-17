@@ -42,33 +42,6 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
       render: (value) => value ? <NavLink to={`/categories/${value}`} style={{padding: '10px 25px'}}>{value}</NavLink> : 'нет'
     },
     {
-      title: '(SEO)Title',
-      dataIndex: 'title',
-      key: 'title'
-    },
-    {
-      title: '(SEO)Description',
-      dataIndex: 'description',
-      key: 'description'
-    },
-    {
-      title: '(SEO)keywords',
-      dataIndex: 'keywords',
-      key: 'keywords'
-    },
-    {
-      title: 'Создано',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      render: (value) => formatDate(value)
-    },
-    {
-      title: 'Обновлено',
-      dataIndex: 'updated_at',
-      key: 'updated_at',
-      render: (value) => formatDate(value)
-    },
-    {
       title: 'Удалено',
       dataIndex: 'deleted_at',
       key: 'deleted_at',

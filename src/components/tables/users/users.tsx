@@ -44,18 +44,6 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       render: (value) => formatDate(value)
     },
     {
-      title: 'Создан',
-      dataIndex: 'created_at',
-      key: 'created_at',
-      render: (value) => formatDate(value)
-    },
-    {
-      title: 'Обновлен',
-      dataIndex: 'updated_at',
-      key: 'updated_at',
-      render: (value) => formatDate(value)
-    },
-    {
       title: 'Удален',
       dataIndex: 'deleted_at',
       key: 'deleted_at',
