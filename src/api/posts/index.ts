@@ -18,6 +18,9 @@ export type Post = {
   description: Maybe<string>
   keywords: Maybe<string>
   source_url: Maybe<string>
+  published_at: Maybe<string>
+  updated_at: Maybe<string>
+  deleted_at: Maybe<string>
   // image: Maybe<string>
 }
 
