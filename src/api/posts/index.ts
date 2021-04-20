@@ -29,7 +29,9 @@ export type Post = {
   // image: Maybe<string>
 }
 
-export type PostInput = NonNullable<Omit<Post, 'id'>>
+export type PostInput = Partial<Omit<Post, 
+  'id'|'slug'|'author'|'author_id'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
+>>
 
 export const posts = {
   getAll,
