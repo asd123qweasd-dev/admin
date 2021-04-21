@@ -20,11 +20,11 @@ const _Navigation: FC<NavigationProps> = () => {
       <Menu.Item key="/" icon={<DashboardOutlined />}>
         <NavLink to="/">Главная</NavLink>
       </Menu.Item>
-      <Menu.Item key="/categories" icon={<AppstoreAddOutlined />}>
-        <NavLink to="/categories">Категории</NavLink>
-      </Menu.Item>
       <Menu.Item key="/posts" icon={<FileDoneOutlined />}>
         <NavLink to="/posts">Посты</NavLink>
+      </Menu.Item>
+      <Menu.Item key="/categories" icon={<AppstoreAddOutlined />}>
+        <NavLink to="/categories">Категории</NavLink>
       </Menu.Item>
       <Menu.Item key="/users" icon={<UserOutlined />}>
         <NavLink to="/users">Пользователи</NavLink>
