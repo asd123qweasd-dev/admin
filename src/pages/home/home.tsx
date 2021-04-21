@@ -1,6 +1,6 @@
 import { Button, Form } from 'antd';
 import React, { FunctionComponent, useRef } from 'react'
-import { TextEditor } from '~/components/textEditor';
+import { TextEditor } from '~/components/inputs/textEditor';
 
 
 export const Home: FunctionComponent = () => {

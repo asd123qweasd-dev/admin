@@ -8,9 +8,11 @@ import { formatDate } from '~/helpers/formatDate'
 import { mutate } from 'swr'
 import { errorFields } from '~/helpers'
 import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
-import { InputEditable } from '~/components/inputEditable'
+import { InputEditable } from '~/components/inputs/inputEditable'
 import { NavLink } from 'react-router-dom'
 import { CategoryStatus } from '~/components/categoryStatus'
+import { PostInput } from '~/api/posts'
+import slug from 'slug'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
@@ -75,9 +77,6 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
             <Item label="Статус">
               <CategoryStatus id={Number(id)} changed/>
-            </Item>
-            <Item label="Slug">
-              {category.data?.slug}
             </Item>
             <Item label="Parent id">
               { Boolean(category.data?.parent_id) && <NavLink to={`/categories/${category.data?.parent_id}`}>{category.data?.name}</NavLink>}

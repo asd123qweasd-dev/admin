@@ -30,7 +30,7 @@ export type Post = {
 }
 
 export type PostInput = Partial<Omit<Post, 
-  'id'|'slug'|'author'|'author_id'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
+  'id'|'author'|'author_id'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
 >>
 
 export const posts = {

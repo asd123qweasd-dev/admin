@@ -7,11 +7,15 @@ import { formatDate } from '~/helpers/formatDate'
 import { mutate } from 'swr'
 import { useGetPosts } from '~/hooks/useGetPosts'
 import { errorFields } from '~/helpers'
-import { InputEditable } from '~/components/inputEditable'
+import { InputEditable } from '~/components/inputs/inputEditable'
 import { useGetUsers } from '~/hooks/useGetUsers'
 import { NavLink } from 'react-router-dom'
 import { useGetCategory } from '~/hooks/useGetCategory'
 import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
+import { PostInput } from '~/api/posts'
+import slug from 'slug'
+import { InputAuthorIdEditable } from '~/components/inputs/inputAuthorIdEditable'
+import { InputCategoryIdEditable } from '~/components/inputs/inputCategoryIdEditable'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
@@ -21,7 +25,7 @@ const _GetOne: FC<GetOneProps> = () => {
   const user = useGetUsers(post.data?.author_id || null)
   const category = useGetCategory(post.data?.category_id || null)
   const [loading, setLoading] = useState<boolean>(false)
-  const [FormInstance] = Form.useForm()
+  const [FormInstance] = Form.useForm<PostInput>()
   const [isEdit, setIsEdit] = useState<boolean>(false)
 
   useEffect(function () {
@@ -69,11 +73,15 @@ const _GetOne: FC<GetOneProps> = () => {
     setLoading(false)
   }
 
+  function onValuesChange ({name}:PostInput) {
+    if (typeof name === 'string') FormInstance.setFieldsValue({slug: slug(name)})
+  }
+
   const { Item } = Descriptions
   return (
     <GetOne>
       <Spin spinning={post.loading || category.loading || user.loading || loading}>
-        <Form name="UpdatePost" form={FormInstance} onFinish={submit}>
+        <Form name="UpdatePost" form={FormInstance} onFinish={submit} onValuesChange={onValuesChange}>
           <Header>
             { !isEdit && <Button type="primary" onClick={() => setIsEdit(true)}>Редактировать</Button> }
             { isEdit && <Button type="primary" htmlType="submit">Сохранить</Button> }
@@ -94,13 +102,13 @@ const _GetOne: FC<GetOneProps> = () => {
               }
             </Item>
             <Item label="Slug">
-              {post.data?.slug}
+              <InputEditable edit={isEdit} name="slug" value={post.data?.slug} title="slug" />
             </Item>
             <Item label="Автор">
-              { post.data?.author_id && <NavLink to={`/users/${post.data?.author_id}`}>{user.data?.name}</NavLink>}
+              <InputAuthorIdEditable edit={isEdit} name="author_id" value={post.data?.author_id} title="Автор"/>
             </Item>
             <Item label="Категория">
-              { post.data?.category_id && <NavLink to={`/users/${post.data?.category_id}`}>{category.data?.name}</NavLink>}
+              <InputCategoryIdEditable edit={isEdit} name="category_id" value={post.data?.category_id} title="Категория"/>
             </Item>
           </Descriptions>
 

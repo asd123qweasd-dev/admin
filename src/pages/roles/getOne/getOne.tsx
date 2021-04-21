@@ -8,7 +8,7 @@ import { RolePermissionsUpdate } from '~/components/forms/rolePermissionsUpdate'
 import { errorFields } from '~/helpers'
 import { mutate } from 'swr'
 import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
-import { InputEditable } from '~/components/inputEditable'
+import { InputEditable } from '~/components/inputs/inputEditable'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {

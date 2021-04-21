@@ -1,54 +1,56 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Modal } from 'antd'
-import { UsersTable } from '~/components/tables/usersTable';
 import { useGetUsers } from '~/hooks/useGetUsers';
 import { ApiContainer } from '~/components/apiContainer';
 import { User } from '~/api/users';
+import { CategoryTable } from '~/components/tables/categoryTable';
+import { Category } from '~/api/category';
+import { useGetCategory } from '~/hooks/useGetCategory';
 
-interface InputPickAuthorIdProps {
+interface InputCategoryIdProps {
   onChange?: (data: number) => void
   value?: number
   id?: string
 }
 
-const _InputPickAuthorId: FC<InputPickAuthorIdProps> = (props) => {
+const _InputCategoryId: FC<InputCategoryIdProps> = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const user = useGetUsers(props.value)
+  const user = useGetCategory(props.value)
 
   function handleOk () {
 
   }
 
-  function picUser (e: User) {
-    props?.onChange && props.onChange(e.id)
+  function picUser (category: Category) {
+    props?.onChange && props.onChange(Number(category.id))
     setIsModalVisible(false)
   }
   
   return (
-    <InputPickAuthorId>
+    <InputCategoryId>
       <div>
         <Button type="link" onClick={() => setIsModalVisible(true)}>{props.value ? user.data?.name : 'Выбрать'}</Button>
       </div>
 
       <Modal 
-        title="Выбрать пользователя" 
+        title="Выбрать категорию" 
         visible={isModalVisible} 
         onOk={handleOk} 
         onCancel={() => setIsModalVisible(false)}
         width="80%"
         footer={null}
       >
-        <ApiContainer url="/users">
+        <ApiContainer url="/categories">
           {(data: any) => (
-            <UsersTable data={data} onRowClick={picUser}/>
+            <CategoryTable data={data} onRowClick={picUser}/>
           )}
         </ApiContainer>
       </Modal>
-    </InputPickAuthorId>
+    </InputCategoryId>
   )
 }
 
-const InputPickAuthorId = styled.div``
+const InputCategoryId = styled.div``
 
-export { _InputPickAuthorId as InputPickAuthorId }
+export { _InputCategoryId as InputCategoryId }

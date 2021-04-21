@@ -9,7 +9,7 @@ import { UserRolesUpdate } from '~/components/forms/userRolesUpdate'
 import { formatDate } from '~/helpers/formatDate'
 import { errorFields } from '~/helpers'
 import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
-import {InputEditable} from '~/components/inputEditable'
+import {InputEditable} from '~/components/inputs/inputEditable'
 import { UserStatus } from '~/components/userStatus'
 
 interface GetOneProps { }

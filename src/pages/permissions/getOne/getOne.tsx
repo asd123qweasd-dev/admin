@@ -7,7 +7,7 @@ import { useGetPermissions } from '~/hooks/useGetPermissions'
 import { mutate } from 'swr'
 import { errorFields } from '~/helpers'
 import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
-import { InputEditable } from '~/components/inputEditable'
+import { InputEditable } from '~/components/inputs/inputEditable'
 
 interface GetOneProps { }
 

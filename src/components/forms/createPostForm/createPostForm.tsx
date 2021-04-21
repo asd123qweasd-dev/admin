@@ -6,9 +6,10 @@ import api from '~/api'
 import { useHistory } from 'react-router'
 import { PostInput } from '~/api/posts'
 import { rules } from '~/helpers'
-import { TextEditor } from '~/components/textEditor'
-import { InputPickAuthorId } from '~/components/inputPickAuthorId'
-import { InputPickCategoryId } from '~/components/inputPickCategoryId'
+import { TextEditor } from '~/components/inputs/textEditor'
+import { InputAuthorId } from '~/components/inputs/inputAuthorId'
+import { InputCategoryId } from '~/components/inputs/inputCategoryId'
+import slug from 'slug'
 
 interface СreatePostFormProps { }
 
@@ -38,6 +39,10 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
     }
     setLoading(false)
   }
+  
+  function onValuesChange ({name}:PostInput) {
+    if (typeof name === 'string') FormInstance.setFieldsValue({slug: slug(name)})
+  }
 
   return (
     <User>
@@ -47,6 +52,7 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
           name="СreatePostForm"
           form={FormInstance}
           onFinish={submit}
+          onValuesChange={onValuesChange}
           { ...formItemLayout }
         >
           <FormWrap>
@@ -54,19 +60,23 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
               <Input placeholder="Имя" />
             </Form.Item>
 
+            <Form.Item name="slug" label="slug" rules={rules(true, 'Введите slug')}>
+              <Input placeholder="slug" />
+            </Form.Item>
+
             <Form.Item name="intro" label="intro" rules={rules(false, 'Введите intro')}>
               <Input placeholder="intro" />
             </Form.Item>
 
-            <Form.Item name="author_id" label="author_id" rules={rules(true, 'Введите author_id')}>
-              <InputPickAuthorId />
+            <Form.Item name="author_id" label="Автор" rules={rules(true, 'Введите автора')}>
+              <InputAuthorId />
             </Form.Item>
 
-            <Form.Item name="category_id" label="category_id" rules={rules(true, 'Введите category_id')}>
-              <InputPickCategoryId />
+            <Form.Item name="category_id" label="Категория" rules={rules(true, 'Введите категорию')}>
+              <InputCategoryId />
             </Form.Item>
 
-            <Form.Item name="source_url" label="source_url" rules={rules(false, 'Введите source_url')}>
+            <Form.Item name="source_url" label="Источник (url)" rules={rules(false, 'Источник (url)')}>
               <Input placeholder="source_url" />
             </Form.Item>
 
@@ -109,6 +119,7 @@ const Title = styled(Typography.Title)``
 const FormWrap = styled.div`
   width: 550px;
   max-width: 100%;
+  padding-top: 20px;
 `
 
 const EditorWrap = styled.div`
