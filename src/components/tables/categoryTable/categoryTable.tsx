@@ -5,12 +5,13 @@ import { ColumnsType } from 'antd/lib/table'
 import { NavLink } from 'react-router-dom'
 import { CategoryStatus } from '~/components/categoryStatus'
 
-interface CategoryProps {
+interface CategoryTableProps {
   data: any[]|undefined
   title?: string
+  onRowClick?: (data: any) => void
 }
 
-const _Category: FC<CategoryProps> = ({data, title}) => {
+const _CategoryTable: FC<CategoryTableProps> = ({data, title, onRowClick}) => {
   const columns:ColumnsType<any> = [
     {
       title: 'id',
@@ -38,7 +39,7 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
     },
   ]
   return (
-    <Category>
+    <CategoryTable>
       { title && 
         <Title level={4}>{title}</Title>
       }
@@ -53,15 +54,15 @@ const _Category: FC<CategoryProps> = ({data, title}) => {
         }}
         onRow={(record, rowIndex) => {
           return {
-            onClick: event => {}
+            onClick: () => onRowClick && onRowClick(record)
           };
         }}
       />
-    </Category>
+    </CategoryTable>
   )
 }
 
-const Category = styled.div``
+const CategoryTable = styled.div``
 const Title = styled(Typography.Title)``
 
-export { _Category as Category }
+export { _CategoryTable as CategoryTable }

@@ -3,15 +3,15 @@ import styled from '@emotion/styled'
 import { Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { NavLink } from 'react-router-dom'
-import { formatDate } from '~/helpers/formatDate'
 import { UserStatus } from '~/components/userStatus'
 
-interface UsersProps {
+interface UsersTableProps {
   data: any[]|undefined
   title?: string
+  onRowClick?: (data: any) => void
 }
 
-const _Users: FC<UsersProps> = ({data, title}) => {
+const _UsersTable: FC<UsersTableProps> = ({data, title, onRowClick}) => {
   const columns:ColumnsType<any> = [
     {
       title: 'id',
@@ -45,8 +45,10 @@ const _Users: FC<UsersProps> = ({data, title}) => {
       })
     }
   ]
+
+  
   return (
-    <Users>
+    <UsersTable >
       { title && 
         <Title level={4}>{title}</Title>
       }
@@ -61,15 +63,15 @@ const _Users: FC<UsersProps> = ({data, title}) => {
         }}
         onRow={(record, rowIndex) => {
           return {
-            onClick: event => {}
+            onClick: e => onRowClick && onRowClick(record)
           };
         }}
       />
-    </Users>
+    </UsersTable>
   )
 }
 
-const Users = styled.div``
+const UsersTable = styled.div``
 const Title = styled(Typography.Title)``
 
-export { _Users as Users }
+export { _UsersTable as UsersTable }
