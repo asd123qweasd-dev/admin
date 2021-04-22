@@ -9,13 +9,13 @@ import { useGetPosts } from '~/hooks/useGetPosts'
 import { errorFields } from '~/helpers'
 import { InputEditable } from '~/components/inputs/inputEditable'
 import { useGetUsers } from '~/hooks/useGetUsers'
-import { NavLink } from 'react-router-dom'
 import { useGetCategory } from '~/hooks/useGetCategory'
 import { descriptionDefaultSettings } from '~/helpers/descriptionSettings'
 import { PostInput } from '~/api/posts'
 import slug from 'slug'
 import { InputAuthorIdEditable } from '~/components/inputs/inputAuthorIdEditable'
 import { InputCategoryIdEditable } from '~/components/inputs/inputCategoryIdEditable'
+import { TextEditorEditable } from '~/components/inputs/textEditorEditable'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
@@ -135,6 +135,10 @@ const _GetOne: FC<GetOneProps> = () => {
               {formatDate(post.data?.deleted_at)}
             </Item>
           </Descriptions>
+
+          <Item label="body">
+            <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" />
+          </Item>
         </Form>
         <Footer>
           {post.data?.deleted_at

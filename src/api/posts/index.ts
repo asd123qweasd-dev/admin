@@ -7,6 +7,7 @@ import { publish } from './publish'
 import { restore } from './restore'
 import { User } from '~/api/users'
 import { Category } from '~/api/category'
+import { DataProp } from 'editorjs-blocks-react-renderer'
 
 export type Post = {
   id: string
@@ -17,7 +18,7 @@ export type Post = {
   slug: Maybe<string>
   name: Maybe<string>
   intro: Maybe<string>
-  body: Maybe<string>
+  body: Maybe<DataProp>
   title: Maybe<string>
   description: Maybe<string>
   keywords: Maybe<string>
