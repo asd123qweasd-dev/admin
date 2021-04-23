@@ -58,8 +58,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-           New release: Админка
-           version: ${{ steps.extract_version.outputs.version }}
+           🥳 New release: `admin:${{ steps.extract_version.outputs.version }}`
 
       # - name: Build image
       #   run: |
