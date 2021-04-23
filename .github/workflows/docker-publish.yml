@@ -13,21 +13,21 @@ env:
   IMAGE_NAME: ghcr.io/${{ github.repository }}
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Run tests
-        run: |
-          if [ -f docker-compose.test.yml ]; then
-            docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
-          else
-            docker build . --file Dockerfile
-          fi
+  #     - name: Run tests
+  #       run: |
+  #         if [ -f docker-compose.test.yml ]; then
+  #           docker-compose --file docker-compose.test.yml build
+  #           docker-compose --file docker-compose.test.yml run sut
+  #         else
+  #           docker build . --file Dockerfile
+  #         fi
   push:
-    needs: test
+    # needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -51,24 +51,31 @@ jobs:
           echo VERSION=$VERSION
           echo "##[set-output name=version;]$VERSION"
         id: extract_version
+      
+      - name: send custom message with args
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: The ${{ github.event_name }} event triggered first step.
 
-      - name: Build image
-        run: |
-          GITHUB_REF=${{ steps.extract_branch.outputs.branch }}
-          VERSION=${{ steps.extract_version.outputs.version }}
-          echo GITHUB_REF=$GITHUB_REF
-          echo VERSION=$VERSION
-          docker build . --file Dockerfile --build-arg APP_VERSION=$VERSION --tag $IMAGE_NAME
+      # - name: Build image
+      #   run: |
+      #     GITHUB_REF=${{ steps.extract_branch.outputs.branch }}
+      #     VERSION=${{ steps.extract_version.outputs.version }}
+      #     echo GITHUB_REF=$GITHUB_REF
+      #     echo VERSION=$VERSION
+      #     docker build . --file Dockerfile --build-arg APP_VERSION=$VERSION --tag $IMAGE_NAME
 
-      - name: Log into registry
-        run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # - name: Log into registry
+      #   run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
-        run: |
-          IMAGE_ID=$IMAGE_NAME
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=${{ steps.extract_version.outputs.version }}
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      # - name: Push image
+      #   run: |
+      #     IMAGE_ID=$IMAGE_NAME
+      #     IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+      #     VERSION=${{ steps.extract_version.outputs.version }}
+      #     echo IMAGE_ID=$IMAGE_ID
+      #     echo VERSION=$VERSION
+      #     docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+      #     docker push $IMAGE_ID:$VERSION
