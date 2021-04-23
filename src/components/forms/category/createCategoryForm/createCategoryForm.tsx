@@ -31,7 +31,7 @@ const _CreateCategoryForm: FC<CreateCategoryFormProps> = () => {
     const {slug, name, title, description, keywords} = value
     try {
       const { data } = await api.category.create({slug, name, title, description, keywords})
-      history.push(`/category/${data.id}`)
+      history.push(`/categories/${data.id}`)
     } catch (err) {
       errorFields(err, FormInstance)
     }
@@ -53,19 +53,19 @@ const _CreateCategoryForm: FC<CreateCategoryFormProps> = () => {
             <Input placeholder="Имя" />
           </Form.Item>
 
-          <Form.Item name="slug" label="slug" rules={rules(true, 'Введите slug')}>
+          <Form.Item name="slug" label="slug" rules={rules(false, 'Введите slug')}>
             <Input placeholder="Slug" />
           </Form.Item>
 
-          <Form.Item name="title" label="title" rules={rules(true, 'Введите title')}>
+          <Form.Item name="title" label="title" rules={rules(false, 'Введите title')}>
             <Input placeholder="title" />
           </Form.Item>
 
-          <Form.Item name="description" label="description" rules={rules(true, 'Введите description')}>
+          <Form.Item name="description" label="description" rules={rules(false, 'Введите description')}>
             <Input placeholder="description" />
           </Form.Item>
 
-          <Form.Item name="keywords" label="keywords" rules={rules(true, 'Введите keywords')}>
+          <Form.Item name="keywords" label="keywords" rules={rules(false, 'Введите keywords')}>
             <Input placeholder="keywords" />
           </Form.Item>
           

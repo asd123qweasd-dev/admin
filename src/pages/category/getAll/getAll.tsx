@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { ApiContainer } from '~/components/apiContainer'
-import { Category as CategoryTables } from '~/components/tables/category'
+import { CategoryTable } from '~/components/tables/categoryTable'
 import { Typography, Button } from 'antd'
 import { NavLink } from 'react-router-dom'
 
@@ -11,14 +11,14 @@ const _GetAll: FC<GetAllProps> = () => {
   return (
     <GetAll>
       <Header>
-        <Title level={4}>Роли</Title>
+        <Title level={4}>Категории</Title>
         <NavLink to={`/categories/create`}>
           <Button type="primary">Создать</Button>
         </NavLink>
       </Header>
       <ApiContainer url="/categories">
         {(data: any) => (
-          <CategoryTables data={data} />
+          <CategoryTable data={data} />
         )}
       </ApiContainer>
     </GetAll>

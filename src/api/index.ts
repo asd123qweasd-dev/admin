@@ -3,6 +3,7 @@ import { users } from './users'
 import { roles } from './roles'
 import { permissions } from './permissions'
 import { category } from './category'
+import { posts } from './posts'
 
 export type ApiPaginationLinks = {
   first: Maybe<string>
@@ -36,7 +37,8 @@ export const api = {
   users,
   roles,
   permissions,
-  category
+  category,
+  posts
 }
 
 export default api

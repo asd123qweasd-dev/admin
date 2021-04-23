@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import {ApiContainer} from '~/components/apiContainer'
-import { Users as UsersTables } from '~/components/tables/users'
+import { UsersTable } from '~/components/tables/usersTable'
 import {Typography, Button} from 'antd'
 import { NavLink } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ const _GetAll: FC<GetAllProps> = () => {
       </Header>
       <ApiContainer url="/users">
         {(data: any) => (
-          <UsersTables data={data} />
+          <UsersTable data={data} />
         )}
       </ApiContainer>
     </GetAll>

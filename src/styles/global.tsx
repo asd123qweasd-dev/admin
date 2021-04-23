@@ -55,7 +55,9 @@ const styles = css`
     /* overflow-x: hidden; */
   }
 
-  
+  h1 {
+    font-size: 23px;
+  }
   ${scroll}
   ${svgSprite}
 `

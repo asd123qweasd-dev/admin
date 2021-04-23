@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
-import { useGetUser } from '~/hooks/useGetUser'
+import { useGetUsers } from '~/hooks/useGetUsers'
 import { Button, Select, Spin, Tag } from 'antd'
 import { useGetRole } from '~/hooks/useGetRole'
 import { css } from '@emotion/css'
@@ -9,12 +9,12 @@ import {mutate} from 'swr'
 
 interface UserRolesUpdateProps {
   userId: string
+  edit: boolean
 }
 
-const _UserRolesUpdate: FC<UserRolesUpdateProps> = ({userId}) => {
+const _UserRolesUpdate: FC<UserRolesUpdateProps> = ({userId, edit}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [editMode, setEditMode] = useState<boolean>(false)
-  const user = useGetUser(userId)
+  const user = useGetUsers(Number(userId))
   const roles = useGetRole()
 
   
@@ -32,7 +32,7 @@ const _UserRolesUpdate: FC<UserRolesUpdateProps> = ({userId}) => {
       <Spin spinning={loading}>
         {user.data?.roles &&
           <>
-            {editMode
+            {edit
               ? <Select 
                   mode="tags" 
                   className={selectRoles} 
@@ -51,7 +51,6 @@ const _UserRolesUpdate: FC<UserRolesUpdateProps> = ({userId}) => {
                   })}
                 </div>
             }
-            <Button type="primary" onClick={() => setEditMode(!editMode)}>{editMode ? 'закрыть' : 'изменить' }</Button>
           </>
         }
       </Spin>

@@ -9,11 +9,11 @@ import { useGetPermissions } from '~/hooks/useGetPermissions'
 
 interface RolePermissionsUpdateProps {
   roleId: string
+  edit: boolean
 }
 
-const _RolePermissionsUpdate: FC<RolePermissionsUpdateProps> = ({roleId}) => {
+const _RolePermissionsUpdate: FC<RolePermissionsUpdateProps> = ({roleId, edit}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [editMode, setEditMode] = useState<boolean>(false)
   const role = useGetRole(roleId)
   const permissions = useGetPermissions()
 
@@ -32,7 +32,7 @@ const _RolePermissionsUpdate: FC<RolePermissionsUpdateProps> = ({roleId}) => {
       <Spin spinning={loading}>
         {role.data?.permissions &&
           <>
-            {editMode
+            {edit
               ? <Select 
                   mode="tags" 
                   className={selectRoles} 
@@ -51,7 +51,6 @@ const _RolePermissionsUpdate: FC<RolePermissionsUpdateProps> = ({roleId}) => {
                   })}
                 </div>
             }
-            <Button type="primary" onClick={() => setEditMode(!editMode)}>{editMode ? 'закрыть' : 'изменить' }</Button>
           </>
         }
       </Spin>
