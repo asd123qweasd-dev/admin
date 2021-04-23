@@ -7,7 +7,7 @@ import { publish } from './publish'
 import { restore } from './restore'
 import { User } from '~/api/users'
 import { Category } from '~/api/category'
-import { DataProp } from 'editorjs-blocks-react-renderer'
+import { DataProp } from '~/components/articleRender'
 
 export type Post = {
   id: string

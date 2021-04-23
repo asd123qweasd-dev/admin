@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Form } from 'antd'
 import { rules } from '~/helpers'
-import Blocks, { DataProp } from 'editorjs-blocks-react-renderer';
 import { TextEditor } from '~/components/inputs/textEditor'
+import ArticleRender, { DataProp } from '~/components/articleRender';
 
 interface TextEditorEditableProps {
   name: string
@@ -22,7 +22,7 @@ const _TextEditorEditable: FC<TextEditorEditableProps> = ({name, title, edit, va
           </Form.Item>
         : <>
             { value && 
-              <Blocks data={value} />
+              <ArticleRender data={value} />
             }
           </>
       }

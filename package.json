@@ -192,5 +192,8 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
+  },
+  "devDependencies": {
+    "@types/react-html-parser": "^2.0.1"
   }
 }
