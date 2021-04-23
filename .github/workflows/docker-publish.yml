@@ -60,23 +60,23 @@ jobs:
           format: markdown
           message: "🥳 New release: `admin:${{ steps.extract_version.outputs.version }}`"
 
-      # - name: Build image
-      #   run: |
-      #     GITHUB_REF=${{ steps.extract_branch.outputs.branch }}
-      #     VERSION=${{ steps.extract_version.outputs.version }}
-      #     echo GITHUB_REF=$GITHUB_REF
-      #     echo VERSION=$VERSION
-      #     docker build . --file Dockerfile --build-arg APP_VERSION=$VERSION --tag $IMAGE_NAME
+      - name: Build image
+        run: |
+          GITHUB_REF=${{ steps.extract_branch.outputs.branch }}
+          VERSION=${{ steps.extract_version.outputs.version }}
+          echo GITHUB_REF=$GITHUB_REF
+          echo VERSION=$VERSION
+          docker build . --file Dockerfile --build-arg APP_VERSION=$VERSION --tag $IMAGE_NAME
 
-      # - name: Log into registry
-      #   run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Log into registry
+        run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      # - name: Push image
-      #   run: |
-      #     IMAGE_ID=$IMAGE_NAME
-      #     IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-      #     VERSION=${{ steps.extract_version.outputs.version }}
-      #     echo IMAGE_ID=$IMAGE_ID
-      #     echo VERSION=$VERSION
-      #     docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-      #     docker push $IMAGE_ID:$VERSION
+      - name: Push image
+        run: |
+          IMAGE_ID=$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=${{ steps.extract_version.outputs.version }}
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
