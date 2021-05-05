@@ -81,7 +81,7 @@ const _GetOne: FC<GetOneProps> = () => {
   return (
     <GetOne>
       <Spin spinning={post.loading || category.loading || user.loading || loading}>
-        <Form name="UpdatePost" form={FormInstance} onFinish={submit} onValuesChange={onValuesChange}>
+        <Form name="UpdatePost" form={FormInstance} onFinish={submit} onValuesChange={onValuesChange} scrollToFirstError={{behavior: 'smooth'}}>
           <Header>
             { !isEdit && <Button type="primary" onClick={() => setIsEdit(true)}>Редактировать</Button> }
             { isEdit && <Button type="primary" htmlType="submit">Сохранить</Button> }

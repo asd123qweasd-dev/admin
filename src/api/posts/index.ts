@@ -19,6 +19,7 @@ export type Post = {
   name: Maybe<string>
   intro: Maybe<string>
   body: Maybe<DataProp>
+  image: [Blob]
   title: Maybe<string>
   description: Maybe<string>
   keywords: Maybe<string>
@@ -31,7 +32,7 @@ export type Post = {
 }
 
 export type PostInput = Partial<Omit<Post, 
-  'id'|'author'|'author_id'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
+  'id'|'author'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
 >>
 
 export const posts = {

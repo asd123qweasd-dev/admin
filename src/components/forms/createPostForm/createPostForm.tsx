@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Form, Input, Spin, Typography } from 'antd'
 import { errorFields } from '~/helpers/showErrorFields'
@@ -10,6 +10,8 @@ import { TextEditor } from '~/components/inputs/textEditor'
 import { InputAuthorId } from '~/components/inputs/inputAuthorId'
 import { InputCategoryId } from '~/components/inputs/inputCategoryId'
 import slug from 'slug'
+import { useGetMe } from '~/hooks/useGetMe'
+import { InputImage } from '~/components/inputs/inputImage'
 
 interface СreatePostFormProps { }
 
@@ -28,8 +30,15 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
   const [FormInstance] = Form.useForm<PostInput>()
   const history = useHistory()
   const [loading, setLoading] = useState<boolean>(false)
+  const user = useGetMe()
+
+  useEffect(function() {
+    FormInstance.setFieldsValue({author_id: user.data?.id})
+  }, [user])
 
   async function submit(value: PostInput) {
+    console.log(value);
+    
     setLoading(true)
     try {
       const { data } = await api.posts.create(value)
@@ -46,10 +55,13 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
 
   return (
     <User>
-      <Spin spinning={loading}>
+      <Spin spinning={user.loading || loading}>
         <Title level={4}>Создать пост</Title>
         <Form
           name="СreatePostForm"
+          scrollToFirstError={{
+            behavior: 'smooth'
+          }}
           form={FormInstance}
           onFinish={submit}
           onValuesChange={onValuesChange}
@@ -78,6 +90,10 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
 
             <Form.Item name="source_url" label="Источник (url)" rules={rules(false, 'Источник (url)')}>
               <Input placeholder="source_url" />
+            </Form.Item>
+
+            <Form.Item name="image">
+              <InputImage />
             </Form.Item>
 
             <Title level={5}>SEO</Title>
