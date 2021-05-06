@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Form, Spin, Tag } from 'antd'
+import { Button, Descriptions, Form, Spin, Tag, Image } from 'antd'
 import api from '~/api'
 import { formatDate } from '~/helpers/formatDate'
 import { mutate } from 'swr'
@@ -16,6 +16,7 @@ import slug from 'slug'
 import { InputAuthorIdEditable } from '~/components/inputs/inputAuthorIdEditable'
 import { InputCategoryIdEditable } from '~/components/inputs/inputCategoryIdEditable'
 import { TextEditorEditable } from '~/components/inputs/textEditorEditable'
+import { InputImageEditable } from '~/components/inputs/inputImageEditable'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
@@ -110,7 +111,12 @@ const _GetOne: FC<GetOneProps> = () => {
             <Item label="Категория">
               <InputCategoryIdEditable edit={isEdit} name="category_id" value={post.data?.category_id} title="Категория"/>
             </Item>
+            <Item label="Изображение">
+              <InputImageEditable edit={isEdit} name="images" value={post.data?.images} title="Изображение" />
+            </Item>
           </Descriptions>
+
+          
 
           <Descriptions title="SEO" {...descriptionDefaultSettings}>
             <Item label="title">
@@ -136,9 +142,7 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
           </Descriptions>
 
-          <Item label="body">
-            <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" />
-          </Item>
+          <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" />
         </Form>
         <Footer>
           {post.data?.deleted_at

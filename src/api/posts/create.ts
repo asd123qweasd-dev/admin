@@ -1,5 +1,4 @@
 import { AxiosPromise } from "axios";
-import qs from 'qs';
 import axios from "~/lib/axios";
 import { Post, PostInput } from ".";
 
@@ -11,7 +10,7 @@ export function create(data: PostInput): AxiosPromise<Post> {
   data.category_id && formData.append('category_id', String(data.category_id))
   data.name && formData.append('name', String(data.name))
   data.slug && formData.append('slug', String(data.slug))
-  // data.body && formData.append('body', JSON.stringify(data.body))
+  data.body && formData.append('body', JSON.stringify(data.body))
   data.image && formData.append(`image`, data.image[0])
   // data.image && data.image.forEach((file, key) => {
   //   formData.append(`image[${key}]`, file)

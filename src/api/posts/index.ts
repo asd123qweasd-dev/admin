@@ -9,6 +9,14 @@ import { User } from '~/api/users'
 import { Category } from '~/api/category'
 import { DataProp } from '~/components/articleRender'
 
+export type PostImage = {
+  id: number
+  large: string
+  medium: string
+  original: string
+  small: string
+}
+
 export type Post = {
   id: string
   author: User
@@ -19,6 +27,7 @@ export type Post = {
   name: Maybe<string>
   intro: Maybe<string>
   body: Maybe<DataProp>
+  images: Maybe<PostImage[]>
   image: [Blob]
   title: Maybe<string>
   description: Maybe<string>
@@ -32,7 +41,7 @@ export type Post = {
 }
 
 export type PostInput = Partial<Omit<Post, 
-  'id'|'author'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
+  'id'|'images'|'author'|'published_at'|'created_at'|'deleted_at'|'updated_at'|'category'
 >>
 
 export const posts = {

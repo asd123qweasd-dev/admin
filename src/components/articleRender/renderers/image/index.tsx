@@ -50,7 +50,7 @@ const Image = ({
   const url = data?.url || data?.file?.url
   return (
     <figure {...figureprops}>
-      {url && <AntImage src={url} alt={data.caption || data.file.name} />}
+      {url && <AntImage src={url} alt={data.caption || data.file?.name} />}
       {data.caption && <figcaption>{ReactHtmlParser(data.caption)}</figcaption>}
     </figure>
   );

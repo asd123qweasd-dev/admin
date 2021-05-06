@@ -2,15 +2,20 @@ import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import ImgCrop from 'antd-img-crop';
 import { Upload } from 'antd';
+import { PostImage } from '~/api/posts';
 
 interface InputImageProps {
   onChange?: (data: any) => void
   value?: number
   id?: string
+  data?: Maybe<PostImage[]>
 }
 
 const _InputImage: FC<InputImageProps> = (props) => {
-  const [fileList, setFileList] = useState<any>([])
+  const initialImages = props.data?.map((item, key) => ({uid: `-${key}`, url: item.original}))
+  const [fileList, setFileList] = useState<any>(initialImages || [])
+  console.log(props);
+  
 
   const onChange = ({ fileList: newFileList }:any) => {
     const fileArr = newFileList.map((item:any) => item.originFileObj)
