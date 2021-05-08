@@ -75,8 +75,6 @@ const _S3View: FC<S3ViewProps> = ({data, error}) => {
       const data = {name: item, path: getPathName()}
       result.push(data)
     })
-    console.log(result);
-    
     return result
   }
 

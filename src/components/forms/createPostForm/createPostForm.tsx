@@ -37,8 +37,6 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
   }, [user])
 
   async function submit(value: PostInput) {
-    console.log(value);
-    
     setLoading(true)
     try {
       const { data } = await api.posts.create(value)
@@ -56,7 +54,7 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
   return (
     <User>
       <Spin spinning={user.loading || loading}>
-        <Title level={4}>Создать пост</Title>
+        {/* <Title level={4}>Создать пост</Title> */}
         <Form
           name="СreatePostForm"
           scrollToFirstError={{
@@ -76,9 +74,9 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
               <Input placeholder="slug" />
             </Form.Item>
 
-            <Form.Item name="intro" label="intro" rules={rules(false, 'Введите intro')}>
+            {/* <Form.Item name="intro" label="intro" rules={rules(false, 'Введите intro')}>
               <Input placeholder="intro" />
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item name="author_id" label="Автор" rules={rules(true, 'Введите автора')}>
               <InputAuthorId />
@@ -88,15 +86,15 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
               <InputCategoryId />
             </Form.Item>
 
-            <Form.Item name="source_url" label="Источник (url)" rules={rules(false, 'Источник (url)')}>
+            {/* <Form.Item name="source_url" label="Источник (url)" rules={rules(false, 'Источник (url)')}>
               <Input placeholder="source_url" />
-            </Form.Item>
+            </Form.Item> */}
 
-            <Form.Item name="image">
+            {/* <Form.Item name="image">
               <InputImage />
-            </Form.Item>
+            </Form.Item> */}
 
-            <Title level={5}>SEO</Title>
+            {/* <Title level={5}>SEO</Title>
 
             <Form.Item name="title" label="title" rules={rules(false, 'Введите title')}>
               <Input placeholder="title" />
@@ -108,15 +106,15 @@ const _СreatePostForm: FC<СreatePostFormProps> = () => {
 
             <Form.Item name="keywords" label="keywords" rules={rules(false, 'Введите keywords')}>
               <Input placeholder="keywords" />
-            </Form.Item>
-          </FormWrap>
+            </Form.Item>*/}
+          </FormWrap> 
           
-          <Title level={5}>Тело статьи</Title>
+          {/* <Title level={5}>Тело статьи</Title>
           <EditorWrap>
             <Form.Item name="body" rules={rules(false, 'Введите body')} >
               <TextEditor />
             </Form.Item>
-          </EditorWrap>
+          </EditorWrap> */}
           
           <Form.Item wrapperCol={{ span: 12, offset: 2 }}>
             <Button type="primary" htmlType="submit" >

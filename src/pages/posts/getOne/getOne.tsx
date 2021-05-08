@@ -28,7 +28,8 @@ const _GetOne: FC<GetOneProps> = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [FormInstance] = Form.useForm<PostInput>()
   const [isEdit, setIsEdit] = useState<boolean>(false)
-
+  console.log(post);
+  
   useEffect(function () {
     const fieldsError = FormInstance.getFieldsError()
     if (!post.data || loading || fieldsError.length) return
@@ -93,6 +94,12 @@ const _GetOne: FC<GetOneProps> = () => {
             <Item label="Имя">
               <InputEditable edit={isEdit} name="name" value={post.data?.name} title="Имя" />
             </Item>
+            <Item label="Изображение">
+              <InputImageEditable edit={isEdit} name="images" value={post.data?.images} title="Изображение" />
+            </Item>
+            <Item label="Intro">
+              <InputEditable edit={isEdit} name="intro" value={post.data?.intro} title="Intro" />
+            </Item>
             <Item label="Статус">
               { post.data?.deleted_at 
                 ? <Tag color="error">Удален</Tag>
@@ -110,9 +117,6 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
             <Item label="Категория">
               <InputCategoryIdEditable edit={isEdit} name="category_id" value={post.data?.category_id} title="Категория"/>
-            </Item>
-            <Item label="Изображение">
-              <InputImageEditable edit={isEdit} name="images" value={post.data?.images} title="Изображение" />
             </Item>
           </Descriptions>
 
