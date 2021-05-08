@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { List, Image } from 'antd'
+import { List, Image, Breadcrumb } from 'antd'
 import folderImg from '~/assets/folder.svg'
 import { css } from '@emotion/css'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 export type CommonPrefixes = {
   Prefix: string
@@ -31,11 +32,16 @@ export type S3 = {
   Name: string
   Prefix: string
 }
+export type BreadcrumbData = {
+  name: string
+  path: string
+}
 
 interface S3ViewProps {
   data: S3|undefined
   error: boolean
 }
+
 
 const _S3View: FC<S3ViewProps> = ({data, error}) => {
   const history = useHistory()
@@ -54,8 +60,34 @@ const _S3View: FC<S3ViewProps> = ({data, error}) => {
     return name.replace(data?.Prefix || '', '')
   }
 
+  function getBreadcrumbData () {
+    // удаляем приставку /s3/ или /s3
+    let routeData = history.location.pathname.replace(/^\/s3\/|\/s3/, '')
+    // удаляем последний символ - если он обратный слеш
+    routeData = routeData.replace(/\/$/, '')
+    const result:BreadcrumbData[] = []
+    // создаем массив имен и путей роутера
+    routeData.split('/').forEach(item => {
+      function getPathName () {
+        const lastPath = [...result].reverse()[0]?.path || '/s3'
+        return `${lastPath}/${item}`
+      }
+      const data = {name: item, path: getPathName()}
+      result.push(data)
+    })
+    console.log(result);
+    
+    return result
+  }
+
   return (
     <S3View>
+      <Breadcrumb style={{margin: '0 0 10px 10px'}}>
+        <Breadcrumb.Item><Link to="/s3">dnr-dev</Link></Breadcrumb.Item>
+        { getBreadcrumbData().map((item, key) => {
+          return <Breadcrumb.Item><Link to={item.path} key={key}>{item.name}</Link></Breadcrumb.Item>
+        })}
+      </Breadcrumb>
       {Boolean(softData?.CommonPrefixes.length) &&
         <List
           loading={!data && !error}
@@ -76,7 +108,7 @@ const _S3View: FC<S3ViewProps> = ({data, error}) => {
           renderItem={item => (
             <List.Item className={listItem}>
               <ItemWrap>
-                <Image src={`https://storage.yandexcloud.net/dnr-dev/${item.Key}`} width={100} height={56}/> <ItemName>{getFileName(item.Key)}</ItemName>
+                <Image src={`https://storage.yandexcloud.net/dnr-dev/${item.Key}`} width={100} height={56} style={{objectFit: 'cover'}}/> <ItemName>{getFileName(item.Key)}</ItemName>
               </ItemWrap>
             </List.Item>
           )}

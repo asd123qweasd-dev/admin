@@ -18,18 +18,15 @@ const _GetAll: FC<GetAllProps> = () => {
   const { data, error } = useSWR<S3>(s3Route(), defaultFetcher)
   
   function s3Route() {
-    return `http://localhost:3002${history.location.pathname.slice(3)}`
+    return `https://s3.dnr.dev${history.location.pathname.slice(3)}`
   }
   
   return (
     <GetAll>
       <Header>
         <Title level={4}>Файлы S3</Title>
-        <NavLink to={`/posts/create`}>
-          <Button type="primary">Создать</Button>
-        </NavLink>
       </Header>
-        <S3View data={data} error={error}/>
+      <S3View data={data} error={error}/>
     </GetAll>
   )
 }
@@ -41,6 +38,8 @@ const Header = styled.div`
   align-items: center;
   padding: 10px 0;
 `
-const Title = styled(Typography.Title)``
+const Title = styled(Typography.Title)`
+  /* margin-left: 10px; */
+`
 
 export { _GetAll as GetAll }
