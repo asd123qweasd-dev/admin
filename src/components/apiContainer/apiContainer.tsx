@@ -18,7 +18,6 @@ const _ApiContainer: FC<PropsWithChildren<ApiContainerProps>> = ({ children, url
   const [apiUrl, setApiUrl] = useState(url)
   const { data, error } = useSWR(apiUrl, fetcher)
 
-  
   useEffect(function () {
     if (!data) return
     setSoftData(data)

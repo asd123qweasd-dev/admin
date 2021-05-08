@@ -6,6 +6,7 @@ import { Roles } from '~/pages/roles'
 import { Permissions } from '~/pages/permissions'
 import { Category } from '~/pages/category'
 import { Posts } from '~/pages/posts'
+import { S3 } from '~/pages/s3'
 
 export const AuthorizedRouters:FunctionComponent = ()=> {
   return (
@@ -31,6 +32,10 @@ export const AuthorizedRouters:FunctionComponent = ()=> {
       <Route exact path="/posts" component={ Posts.GetAll } />
       <Route exact path="/posts/create" component={ Posts.Create } />
       <Route exact path="/posts/:id" component={ Posts.GetOne } />
+
+      <Route path="/s3" component={ S3.GetAll } />
+      {/* <Route exact path="/posts/create" component={ Posts.Create } />
+      <Route exact path="/posts/:id" component={ Posts.GetOne } /> */}
     </Switch>
   )
 }
