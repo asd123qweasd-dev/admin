@@ -5,33 +5,8 @@ import folderImg from '~/assets/folder.svg'
 import { css } from '@emotion/css'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import { S3 } from '~/types/s3'
 
-export type CommonPrefixes = {
-  Prefix: string
-}
-export type StorageClass = 'COLD'
-export type Owner = {
-  DisplayName: string
-  ID: string
-}
-export type Contents = {
-  Key: string,
-  LastModified: string,
-  ETag: string,
-  Size: number,
-  StorageClass: StorageClass
-  Owner: Owner
-}
-export type S3 = {
-  CommonPrefixes: CommonPrefixes[]
-  Contents: Contents[]
-  Delimiter: string
-  IsTruncated: boolean
-  KeyCount: number
-  MaxKeys: number
-  Name: string
-  Prefix: string
-}
 export type BreadcrumbData = {
   name: string
   path: string
@@ -41,7 +16,6 @@ interface S3ViewProps {
   data: S3|undefined
   error: boolean
 }
-
 
 const _S3View: FC<S3ViewProps> = ({data, error}) => {
   const history = useHistory()

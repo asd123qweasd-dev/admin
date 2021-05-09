@@ -10,15 +10,16 @@ interface TextEditorEditableProps {
   title: string
   edit: boolean
   value?: Maybe<DataProp>|undefined
+  s3Folder?: string
 }
 
-const _TextEditorEditable: FC<TextEditorEditableProps> = ({name, title, edit, value}) => {
+const _TextEditorEditable: FC<TextEditorEditableProps> = ({name, title, edit, value, s3Folder}) => {
   
   return (
     <TextEditorEditable>
       {edit
         ? <Form.Item name={name} rules={rules(true, `Введите ${title}`)} style={{marginBottom: '0'}}>
-            <TextEditor />
+            <TextEditor s3Folder={s3Folder}/>
           </Form.Item>
         : <>
             { value && 

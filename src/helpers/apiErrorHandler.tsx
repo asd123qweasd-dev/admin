@@ -23,10 +23,9 @@ export function apiErrorHandler(error: any) {
         break
     }
   } else {
-    const isNetworkError = error.message === 'Network Error'
     notification.error({
       message: 'Ошибка',
-      description: isNetworkError ? 'Нет подключения к интернету' : error.message
+      description: error.message
     })
   }
 }

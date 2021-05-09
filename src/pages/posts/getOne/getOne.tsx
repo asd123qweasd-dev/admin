@@ -146,7 +146,7 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
           </Descriptions>
 
-          <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" />
+          <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" s3Folder={location.pathname}/>
         </Form>
         <Footer>
           {post.data?.deleted_at

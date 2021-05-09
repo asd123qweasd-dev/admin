@@ -1,14 +1,12 @@
 import React, { FC } from 'react'
 import styled from '@emotion/styled'
-import { ApiContainer } from '~/components/apiContainer'
-import { PostsTable } from '~/components/tables/posts'
 import { Typography, Button } from 'antd'
-import { NavLink, useHistory } from 'react-router-dom'
-import { Post } from '~/api/posts'
+import { useHistory } from 'react-router-dom'
 import { S3View } from '~/components/s3View'
-import { S3 } from '~/components/s3View/s3View'
 import useSWR from 'swr'
 import { defaultFetcher } from '~/lib/axios'
+import { S3 } from '~/types/s3'
+import { S3_BASE_URL } from '~/config'
 
 interface GetAllProps {}
 
@@ -18,7 +16,7 @@ const _GetAll: FC<GetAllProps> = () => {
   const { data, error } = useSWR<S3>(s3Route(), defaultFetcher)
   
   function s3Route() {
-    return `https://s3.dnr.dev${history.location.pathname.slice(3)}`
+    return `${S3_BASE_URL}${history.location.pathname.slice(3)}`
   }
   
   return (

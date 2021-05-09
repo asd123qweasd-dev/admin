@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import styled from '@emotion/styled'
 import { Form, Image } from 'antd'
 import { rules } from '~/helpers'
-import { TextEditor } from '~/components/inputs/textEditor'
 import ArticleRender, { DataProp } from '~/components/articleRender';
 import { PostImage } from '~/api/posts'
 import { InputImage } from '~/components/inputs/inputImage'
