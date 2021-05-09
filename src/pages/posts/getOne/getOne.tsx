@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useLocation, useParams } from 'react-router'
-import { Button, Descriptions, Form, Spin, Tag } from 'antd'
+import { Button, Descriptions, Form, Spin, Tag, Image } from 'antd'
 import api from '~/api'
 import { formatDate } from '~/helpers/formatDate'
 import { mutate } from 'swr'
@@ -16,6 +16,7 @@ import slug from 'slug'
 import { InputAuthorIdEditable } from '~/components/inputs/inputAuthorIdEditable'
 import { InputCategoryIdEditable } from '~/components/inputs/inputCategoryIdEditable'
 import { TextEditorEditable } from '~/components/inputs/textEditorEditable'
+import { InputImageEditable } from '~/components/inputs/inputImageEditable'
 interface GetOneProps { }
 
 const _GetOne: FC<GetOneProps> = () => {
@@ -27,7 +28,8 @@ const _GetOne: FC<GetOneProps> = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [FormInstance] = Form.useForm<PostInput>()
   const [isEdit, setIsEdit] = useState<boolean>(false)
-
+  console.log(post);
+  
   useEffect(function () {
     const fieldsError = FormInstance.getFieldsError()
     if (!post.data || loading || fieldsError.length) return
@@ -81,7 +83,7 @@ const _GetOne: FC<GetOneProps> = () => {
   return (
     <GetOne>
       <Spin spinning={post.loading || category.loading || user.loading || loading}>
-        <Form name="UpdatePost" form={FormInstance} onFinish={submit} onValuesChange={onValuesChange}>
+        <Form name="UpdatePost" form={FormInstance} onFinish={submit} onValuesChange={onValuesChange} scrollToFirstError={{behavior: 'smooth'}}>
           <Header>
             { !isEdit && <Button type="primary" onClick={() => setIsEdit(true)}>Редактировать</Button> }
             { isEdit && <Button type="primary" htmlType="submit">Сохранить</Button> }
@@ -91,6 +93,12 @@ const _GetOne: FC<GetOneProps> = () => {
             <Item label="id">{id}</Item>
             <Item label="Имя">
               <InputEditable edit={isEdit} name="name" value={post.data?.name} title="Имя" />
+            </Item>
+            <Item label="Изображение">
+              <InputImageEditable edit={isEdit} name="image" value={post.data?.image} title="Изображение" />
+            </Item>
+            <Item label="Intro">
+              <InputEditable edit={isEdit} name="intro" value={post.data?.intro} title="Intro" />
             </Item>
             <Item label="Статус">
               { post.data?.deleted_at 
@@ -111,6 +119,8 @@ const _GetOne: FC<GetOneProps> = () => {
               <InputCategoryIdEditable edit={isEdit} name="category_id" value={post.data?.category_id} title="Категория"/>
             </Item>
           </Descriptions>
+
+          
 
           <Descriptions title="SEO" {...descriptionDefaultSettings}>
             <Item label="title">
@@ -136,9 +146,7 @@ const _GetOne: FC<GetOneProps> = () => {
             </Item>
           </Descriptions>
 
-          <Item label="body">
-            <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" />
-          </Item>
+          <TextEditorEditable edit={isEdit} name="body" value={post.data?.body} title="body" s3Folder={location.pathname}/>
         </Form>
         <Footer>
           {post.data?.deleted_at

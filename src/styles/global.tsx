@@ -58,6 +58,10 @@ const styles = css`
   h1 {
     font-size: 23px;
   }
+
+  .codex-editor__redactor {
+    padding-bottom: 50px !important;
+  }
   ${scroll}
   ${svgSprite}
 `

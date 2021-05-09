@@ -4,6 +4,7 @@ import { Post, PostInput } from '.';
 
 
 export function update(id: string, data: PostInput): AxiosPromise<Post> {
+
   return axios({
     url: `/posts/${id}`,
     method: 'put',

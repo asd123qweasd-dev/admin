@@ -16,6 +16,8 @@ import CheckList from '@editorjs/checklist'
 import Delimiter from '@editorjs/delimiter'
 import InlineCode from '@editorjs/inline-code'
 import SimpleImage from '@editorjs/simple-image'
+import axios from 'axios'
+import api from '~/api'
 
 const  AlignmentTuneTool  =  require('editorjs-text-alignment-blocktune') ;
 
@@ -53,9 +55,34 @@ export const EDITOR_JS_TOOLS = {
     },
     inlineToolbar: true
   },
-  simpleImage: SimpleImage,
   table: Table,
-  image: Image,
+  image: {
+    class: Image,
+    config: {
+      uploader: {
+        uploadByFile(file){
+          return api.s3.upload(file).then((res) => {
+            return {
+              success: 1,
+              file: {
+                url: res.data.Location
+              }
+            }
+          })
+        },
+        uploadByUrl(url){
+          return api.s3.upload(file).then((res) => {
+            return {
+              success: 1,
+              file: {
+                url: res.data.Location,
+              }
+            }
+          })
+        }
+      }
+    }
+  },
   // paragraph: Paragraph,
   list: List,
   code: Code,
