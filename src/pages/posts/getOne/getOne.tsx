@@ -95,7 +95,7 @@ const _GetOne: FC<GetOneProps> = () => {
               <InputEditable edit={isEdit} name="name" value={post.data?.name} title="Имя" />
             </Item>
             <Item label="Изображение">
-              <InputImageEditable edit={isEdit} name="images" value={post.data?.images} title="Изображение" />
+              <InputImageEditable edit={isEdit} name="image" value={post.data?.image} title="Изображение" />
             </Item>
             <Item label="Intro">
               <InputEditable edit={isEdit} name="intro" value={post.data?.intro} title="Intro" />

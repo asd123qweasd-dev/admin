@@ -2,47 +2,20 @@ import React, { FC, useState } from 'react'
 import styled from '@emotion/styled'
 import ImgCrop from 'antd-img-crop';
 import { message, Upload } from 'antd';
-import { PostImage } from '~/api/posts';
 import { useHistory } from 'react-router';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { S3_STORAGE_URL } from '~/config';
 
 interface InputImageProps {
   onChange?: (data: any) => void
-  value?: number
+  value?: string
   id?: string
-  data?: Maybe<PostImage[]>
 }
 
 const _InputImage: FC<InputImageProps> = (props) => {
-  const initialImages = props.data?.map((item, key) => ({uid: `-${key}`, url: item.original}))
-  const [fileList, setFileList] = useState<any>(initialImages || [])
   const [loading, setLoading] = useState<boolean>(false)
-  const [imageUrl, setImageUrl] = useState<string>()
+  const [imageUrl, setImageUrl] = useState<string|undefined>(props?.value)
   const history = useHistory()
-  console.log(props);
-  
-
-  const onChange = ({ fileList: newFileList }:any) => {
-    const fileArr = newFileList.map((item:any) => item.originFileObj)
-    props.onChange?.(fileArr)
-    setFileList(newFileList)
-  }
-
-  const onPreview = async (file:any) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    //@ts-ignore
-    imgWindow.document.write(image.outerHTML);
-  }
 
   const uploadButton = (
     <div>
@@ -62,48 +35,30 @@ const _InputImage: FC<InputImageProps> = (props) => {
     // }
     return isJpgOrPng
   }
-  function getBase64(img:any, callback:any) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
   function handleChange(info:any) {
     if (info.file.status === 'uploading') {
       setLoading(true)
-      return;
+      return
     }
     if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl:any) =>{
-        setImageUrl(imageUrl)
-        setLoading(false)
-      });
+      setImageUrl(info.file.response.key)
+      setLoading(false)
+      props.onChange?.(info.file.response.key)
     }
-  };
+  }
 
   return (
     <InputImage>
       <ImgCrop rotate grid shape="rect" aspect={16/9} quality={1}>
-        {/* <Upload
-          action={`https://s3.dnr.dev${history.location.pathname}`}
-          listType="picture-card"
-          fileList={fileList}
-          multiple={false}
-          onChange={onChange}
-          onPreview={onPreview}
-        >
-          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-        </Upload> */}
         <Upload
-        // name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action={`https://s3.dnr.dev${history.location.pathname}`}
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-      >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action={`https://s3.dnr.dev${history.location.pathname}`}
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+        >
+        {imageUrl ? <img src={`${S3_STORAGE_URL}${imageUrl}`} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
       </ImgCrop>
     </InputImage>

@@ -27,8 +27,7 @@ export type Post = {
   name: Maybe<string>
   intro: Maybe<string>
   body: Maybe<DataProp>
-  images: Maybe<PostImage[]>
-  image: [Blob]
+  image: Maybe<string>
   title: Maybe<string>
   description: Maybe<string>
   keywords: Maybe<string>
