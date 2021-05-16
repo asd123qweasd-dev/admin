@@ -49,7 +49,7 @@ const _InputImage: FC<InputImageProps> = (props) => {
 
   return (
     <InputImage>
-      <ImgCrop rotate grid shape="rect" aspect={374/280} quality={1}>
+      <ImgCrop rotate grid shape="rect" aspect={420/535} quality={1}>
         <Upload
           listType="picture-card"
           className="avatar-uploader"
